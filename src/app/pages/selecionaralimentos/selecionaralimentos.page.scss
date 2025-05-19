@@ -1,0 +1,41 @@
+ion-button {
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: none;
+  padding: 0 12px;
+}
+
+ion-input {
+  border-radius: 20px;
+  background: #f2f2f2;
+  padding-left: 15px;
+  font-size: 15px;
+}
+
+.campo-instrucao {
+  margin: 10px 0 20px 0;
+  --background: #f2f2f2;
+  --border-radius: 20px;
+}
+
+.botao-verde-claro {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black;
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px; /* MESMO TAMANHO FIXO */
+  padding: 0;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+

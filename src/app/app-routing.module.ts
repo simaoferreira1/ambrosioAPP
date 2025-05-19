@@ -25,7 +25,20 @@ const routes: Routes = [
   },
   {
     path: 'boasvindas',
-    loadChildren: () => import('./pages/boasvindas/boasvindas.module').then( m => m.BoasvindasPageModule)
+    loadChildren: () => import('./pages/boasvindas/boasvindas.module').then(m => m.BoasvindasPageModule)
+  },
+  {
+    path: 'selecionaralimentos',
+    loadChildren: () => import('./pages/selecionaralimentos/selecionaralimentos.module')
+      .then(m => m.SelecionaralimentosPageModule)
+  },
+  {
+  path: 'carregamento',
+  loadComponent: () => import('./pages/carregamento/carregamento.page').then(m => m.CarregamentoPage)
+  },
+  {
+    path: 'receita',
+    loadComponent: () => import('./pages/receita/receita.page').then(m => m.ReceitaPage)
   }
 ];
 

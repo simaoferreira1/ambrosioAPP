@@ -7,7 +7,7 @@
     <ion-icon name="close-outline" class="icon-right"></ion-icon>
   </div>
 
-  <!-- Card de alimento -->
+  <!-- Card fixo com maçãs -->
   <div class="carousel">
     <ion-card class="alimento-card">
       <img src="assets/macas.jpg" alt="Maçãs frescas" />
@@ -17,7 +17,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Indicadores (pontinhos) -->
+    <!-- Indicadores -->
     <div class="dots">
       <div class="dot active"></div>
       <div class="dot"></div>
@@ -30,7 +30,7 @@
     Lista de compras
   </ion-button>
 
-  <ion-button expand="block" fill="clear" class="botao-pilula">
+  <ion-button expand="block" fill="clear" class="botao-pilula" [routerLink]="['/selecionaralimentos']">
     Receitas com os alimentos disponíveis
   </ion-button>
 
