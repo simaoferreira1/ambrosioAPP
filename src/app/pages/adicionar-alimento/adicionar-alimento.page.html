@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn-voltar" routerLink="/menu-alimentos-disponiveis">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        Voltar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="pagina-opcoes">
+  <div class="opcoes-container">
+    <ion-button expand="block" fill="outline" shape="round" class="opcao-btn" routerLink="/inserir-manualmente">
+      Inserir manualmente
+      <ion-icon slot="end" name="phone-portrait-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" shape="round" class="opcao-btn" routerLink="/fazer-scan">
+      Fazer scan
+      <ion-icon slot="end" name="barcode-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>

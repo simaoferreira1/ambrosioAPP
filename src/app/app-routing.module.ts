@@ -39,7 +39,32 @@ const routes: Routes = [
   {
     path: 'receita',
     loadComponent: () => import('./pages/receita/receita.page').then(m => m.ReceitaPage)
+  },
+  {
+    path: 'listade-compras',
+    loadComponent: () => import('./pages/listade-compras/listade-compras.page').then( m => m.ListadeComprasPage)
+  },
+  {
+    path: 'adicionar-alimento',
+    loadComponent: () => import('./pages/adicionar-alimento/adicionar-alimento.page').then( m => m.AdicionarAlimentoPage)
+  },
+  {
+    path: 'menu-alimentos-disponiveis',
+    loadComponent: () => import('./pages/menu-alimentos-disponiveis/menu-alimentos-disponiveis.page').then( m => m.MenuAlimentosDisponiveisPage)
+  },
+  {
+    path: 'inserir-manualmente',
+    loadComponent: () => import('./pages/inserir-manualmente/inserir-manualmente.page').then( m => m.InserirManualmentePage)
+  },
+  {
+    path: 'fazer-scan',
+    loadComponent: () => import('./pages/fazer-scan/fazer-scan.page').then( m => m.FazerScanPage)
   }
+
+
+
+
+
 ];
 
 @NgModule({

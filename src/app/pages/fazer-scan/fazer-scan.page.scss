@@ -1,0 +1,75 @@
+:host {
+  ion-toolbar {
+    --background: white;
+    --color: black;
+
+    ion-button {
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 20px;
+      padding: 6px 14px;
+    }
+
+    .btn-voltar {
+      background-color: #d4f5d3;
+      color: black;
+    }
+
+    .btn-adicionar {
+      background-color: #d4f5d3;
+      color: black;
+    }
+  }
+
+  .fazer-scan-content {
+    --background: #ffffff;
+
+    .imagem-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+
+  img {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .scanner-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 8px;
+    border-radius: 12px;
+
+    ion-icon {
+      font-size: 48px;
+      color: black;
+    }
+  }
+}
+
+
+    .detalhes-container {
+      background-color: #fff;
+      padding: 20px;
+
+      .campo {
+        margin-bottom: 16px;
+
+        .campo-label {
+          font-weight: bold;
+          color: #333;
+          margin: 0;
+        }
+
+        .campo-valor {
+          color: #666;
+          margin: 4px 0 0;
+        }
+      }
+    }
+  }
+}

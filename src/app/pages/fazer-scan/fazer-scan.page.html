@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn-voltar" routerLink="/menu-alimentos-disponiveis">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        Voltar
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button class="btn-adicionar" (click)="adicionarProduto()">
+        Adicionar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fazer-scan-content">
+
+  <!-- Imagem do produto -->
+  <div class="imagem-container">
+    <img [src]="imagemProduto" alt="Produto" />
+    <div class="scanner-overlay">
+      <ion-icon name="scan-outline"></ion-icon>
+    </div>
+  </div>
+
+  <!-- Dados do produto -->
+  <div class="detalhes-container">
+    <ion-label class="campo">
+      <p class="campo-label">Produto</p>
+      <p class="campo-valor">{{ produto }}</p>
+    </ion-label>
+
+    <ion-label class="campo">
+      <p class="campo-label">Quantidade</p>
+      <p class="campo-valor">{{ quantidade }}</p>
+    </ion-label>
+
+    <ion-label class="campo">
+      <p class="campo-label">Data de compra</p>
+      <p class="campo-valor">{{ dataCompra }}</p>
+    </ion-label>
+
+    <ion-label class="campo">
+      <p class="campo-label">Data de validade</p>
+      <p class="campo-valor">{{ dataValidade }}</p>
+    </ion-label>
+  </div>
+
+</ion-content>

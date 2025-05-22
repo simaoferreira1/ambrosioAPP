@@ -1,0 +1,42 @@
+:host {
+  ion-toolbar {
+    --background: white;
+    --color: black;
+
+    .btn-voltar {
+      background-color: #d4f5d3;
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 6px 14px;
+      color: black;
+      font-size: 14px;
+    }
+  }
+
+  .pagina-opcoes {
+    --background: #ffffff;
+
+    .opcoes-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .opcao-btn {
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 16px;
+      --border-color: #ccc;
+      --color: #000;
+      --padding-start: 16px;
+      --padding-end: 16px;
+
+      ion-icon {
+        font-size: 20px;
+        margin-left: 10px;
+      }
+    }
+  }
+}

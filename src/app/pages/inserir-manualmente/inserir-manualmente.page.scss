@@ -1,0 +1,41 @@
+:host {
+  ion-toolbar {
+    --background: white;
+    --color: black;
+
+    .btn-voltar {
+      background-color: #d4f5d3;
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 6px 14px;
+      color: black;
+      font-size: 14px;
+    }
+
+    
+  }
+
+  ion-content {
+    --background: #ffffff;
+
+    .formulario {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      ion-item {
+        --background: #ffffff;
+
+        ion-label {
+          font-size: 14px;
+          color: #333;
+        }
+
+        ion-input {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
