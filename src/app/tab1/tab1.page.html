@@ -3,27 +3,27 @@
   <!-- Campo de pesquisa -->
   <div class="search-bar">
     <ion-icon name="search-outline" class="icon-left"></ion-icon>
-    <ion-input placeholder="Pesquisar"></ion-input>
+    <ion-input placeholder=" Pesquisar"></ion-input>
     <ion-icon name="close-outline" class="icon-right"></ion-icon>
   </div>
 
-  <!-- Card fixo com maçãs -->
-  <div class="carousel">
-    <ion-card class="alimento-card">
-      <img src="assets/macas.jpg" alt="Maçãs frescas" />
-      <ion-card-content>
-        <h3>Maçãs frescas</h3>
-        <p>Expira em 7 dias</p>
-      </ion-card-content>
-    </ion-card>
-
-    <!-- Indicadores -->
-    <div class="dots">
-      <div class="dot active"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
+  <swiper-container
+  slides-per-view="1"
+  space-between="10"
+  pagination="true"
+  autoplay-delay="2500"
+  loop="true"
+  >
+    <swiper-slide *ngFor="let item of slides">
+      <ion-card class="custom-card">
+        <img [src]="item.img" alt="Product Image" />
+        <ion-card-content>
+          <h2><strong>{{ item.title }}</strong></h2>
+          <p>{{ item.subtitle }}</p>
+        </ion-card-content>
+      </ion-card>
+    </swiper-slide>
+  </swiper-container>
 
   <!-- Botões -->
   <ion-button expand="block" fill="clear" class="botao-pilula" [routerLink]="['/listade-compras']">

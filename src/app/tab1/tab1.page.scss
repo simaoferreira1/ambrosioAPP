@@ -22,56 +22,6 @@
   }
 }
 
-/* Card de alimento */
-.alimento-card {
-  background-color: #d9f3cf;
-  border-radius: 20px;
-  padding: 10px;
-  text-align: center;
-  width: 90%;
-
-  img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-  }
-
-  h3 {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-
-  p {
-    color: #555;
-    font-size: 14px;
-  }
-}
-
-/* Carrossel e pontos */
-.carousel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  background-color: #ccc;
-  border-radius: 50%;
-  margin: 0 3px;
-}
-
-.dot.active {
-  background-color: #000;
-}
-
 /* Botões com estilo "pílula" */
 .botao-pilula {
   --background: #fff;
@@ -86,4 +36,27 @@
   font-weight: 400;
   margin-top: 12px;
   height: 45px;
+}
+
+/*Swiper*/
+.custom-card {
+  width: 365px;
+  height: 370px;
+  border-radius: 20px;
+  background-color: #e0f5d5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+}
+
+ion-card-content {
+  padding: 12px;
+  color: #333;
+}
+
+ion-card img {
+  width: 345px;
+  height: 270px;
+  padding: 20px;
+  border-radius: 20px;
 }
