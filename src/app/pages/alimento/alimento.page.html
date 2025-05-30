@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button class="btn-voltar" routerLink="/menu-alimentos-disponiveis">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        Voltar
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="btn-remover" color="danger" (click)="confirmarRemocao()">
+        <ion-icon slot="start" name="trash-outline"></ion-icon>
+        Remover
+      </ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="imagem-container">
+    <img [src]="alimento.imagem" alt="Imagem do alimento" />
+  </div>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-label class="detalhe"><strong>Quantidade</strong></ion-label>
+      <p>{{ alimento.quantidade }}</p>
+
+      <ion-label class="detalhe"><strong>Data de compra</strong></ion-label>
+      <p>{{ alimento.dataCompra }}</p>
+
+      <ion-label class="detalhe"><strong>Data de validade</strong></ion-label>
+      <p>{{ alimento.dataValidade }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

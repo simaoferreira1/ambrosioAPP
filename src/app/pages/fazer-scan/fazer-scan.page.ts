@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+
 
 @Component({
-  standalone: true,
+  standalone: false,
   selector: 'app-fazer-scan',
   templateUrl: './fazer-scan.page.html',
   styleUrls: ['./fazer-scan.page.scss'],
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule]
 })
 export class FazerScanPage implements OnInit {
 

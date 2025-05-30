@@ -42,24 +42,29 @@ const routes: Routes = [
   },
   {
     path: 'listade-compras',
-    loadComponent: () => import('./pages/listade-compras/listade-compras.page').then( m => m.ListadeComprasPage)
+    loadChildren: () => import('./pages/listade-compras/listade-compras.module').then( m => m.ListadeComprasPageModule)
   },
   {
     path: 'adicionar-alimento',
-    loadComponent: () => import('./pages/adicionar-alimento/adicionar-alimento.page').then( m => m.AdicionarAlimentoPage)
+    loadChildren: () => import('./pages/adicionar-alimento/adicionar-alimento.module').then( m => m.AdicionarAlimentoPageModule)
   },
   {
     path: 'menu-alimentos-disponiveis',
-    loadComponent: () => import('./pages/menu-alimentos-disponiveis/menu-alimentos-disponiveis.page').then( m => m.MenuAlimentosDisponiveisPage)
+    loadChildren: () => import('./pages/menu-alimentos-disponiveis/menu-alimentos-disponiveis.module').then( m => m.MenuAlimentosDisponiveisPageModule)
   },
   {
     path: 'inserir-manualmente',
-    loadComponent: () => import('./pages/inserir-manualmente/inserir-manualmente.page').then( m => m.InserirManualmentePage)
+    loadChildren: () => import('./pages/inserir-manualmente/inserir-manualmente.module').then( m => m.InserirManualmentePageModule)
   },
   {
     path: 'fazer-scan',
-    loadComponent: () => import('./pages/fazer-scan/fazer-scan.page').then( m => m.FazerScanPage)
+    loadChildren: () => import('./pages/fazer-scan/fazer-scan.module').then( m => m.FazerScanPageModule)
+  },
+  {
+    path: 'alimento',
+    loadChildren: () => import('./pages/alimento/alimento.module').then( m => m.AlimentoPageModule)
   }
+
 
 
 

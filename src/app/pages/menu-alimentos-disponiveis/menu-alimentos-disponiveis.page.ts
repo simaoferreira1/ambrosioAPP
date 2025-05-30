@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 
 @Component({
-  standalone: true,
+  standalone: false,
   selector: 'app-menu-alimentos-disponiveis',
   templateUrl: './menu-alimentos-disponiveis.page.html',
-  styleUrls: ['./menu-alimentos-disponiveis.page.scss'],
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule] 
+  styleUrls: ['./menu-alimentos-disponiveis.page.scss']
 })
 export class MenuAlimentosDisponiveisPage implements OnInit {
-
   listaAlimentos = [
     { nome: 'Maçãs', imagem: 'assets/macas.jpg' },
     { nome: 'Carne de vaca moída', imagem: 'assets/carne.jpg' },
@@ -27,7 +21,7 @@ export class MenuAlimentosDisponiveisPage implements OnInit {
     { nome: 'Costeletas do cachaço', imagem: 'assets/costeletas.jpg' }
   ];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 }
