@@ -5,15 +5,6 @@ ion-toolbar {
   justify-content: space-between;
 }
 
-.btn-voltar,
-.btn-remover {
-  background-color: #d7f4d2;
-  color: #4e8d4e;
-  border-radius: 20px;
-  padding: 0 16px;
-  font-weight: 500;
-}
-
 .imagem-container {
   width: 100%;
   height: 200px;
@@ -62,3 +53,45 @@ p {
   border-radius: 20px;
 }
 
+.botao-verde-claro {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black;
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px; /* MESMO TAMANHO FIXO */
+  padding: 0;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.botao-verde-claro-vermelho {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: #d00000; /* vermelho escuro */
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px;
+  padding: 0;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

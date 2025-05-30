@@ -3,29 +3,30 @@
     ion-toolbar {
       --background: white;
       --color: black;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-inline: 10px;
 
-      .btn-voltar,
-      .btn-partilhar {
-        background-color: #d4f5d3;
-        border-radius: 20px;
-        font-weight: 600;
-        padding: 6px 12px;
-        font-size: 14px;
-        color: black;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 10px;
+      min-height: 56px;
+
+      ion-buttons {
+        flex: 0 0 130px; // largura reservada p/ botões (igual aos 120px + margem)
+        display: flex;
+        justify-content: center;
       }
 
       .titulo-lista {
-        font-weight: bold;
-        font-size: 20px;
+        flex: 1;
         text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
-
   ion-content {
     --background: #ffffff;
     color: #000000;
@@ -59,4 +60,36 @@
       }
     }
   }
+}
+
+.botao-verde-claro {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black !important;
+  --border-radius: 20px !important;
+
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.botao-verde-claro-azul {
+  // Se estiveres em SCSS puro
+  @extend .botao-verde-claro;
+  --color: #0066cc !important;
 }

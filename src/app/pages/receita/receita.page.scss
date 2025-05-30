@@ -1,0 +1,20 @@
+.botao-verde-claro {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black;
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px; /* MESMO TAMANHO FIXO */
+  padding: 0;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
