@@ -1,14 +1,25 @@
 <ion-content class="ion-padding">
 
   <!-- Cabeçalho do botão adicionar -->
-  <ion-item lines="none" class="add-header-item">
-    <ion-label>Adicionar alimento</ion-label>
+  <ion-item lines="none" class="add-header-item" routerLink="/adicionar-alimento" detail="false">
+    <ion-label><strong>Adicionar alimento</strong></ion-label>
     <ion-icon name="add-outline" slot="end" class="icon-add"></ion-icon>
   </ion-item>
 
   <!-- Lista de alimentos -->
   <ion-list lines="full">
-    <ion-item button *ngFor="let alimento of alimentos">
+    <ion-item
+      button
+      *ngFor="let alimento of alimentos"
+      [routerLink]="['/alimento']"
+      [queryParams]="{
+        nome: alimento.nome,
+        imagem: alimento.imagem,
+        quantidade: alimento.quantidade,
+        dataCompra: alimento.dataCompra,
+        dataValidade: alimento.dataValidade
+      }"
+    >
       <img slot="start" [src]="alimento.imagem" class="alimento-img" />
       <ion-label>{{ alimento.nome }}</ion-label>
     </ion-item>

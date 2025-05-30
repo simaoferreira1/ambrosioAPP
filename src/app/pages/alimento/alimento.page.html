@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn-voltar" routerLink="/menu-alimentos-disponiveis">
+      <ion-button class="btn-voltar" routerLink="/tabs/tab2">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
@@ -16,6 +16,10 @@
 </ion-header>
 
 <ion-content>
+  <div class="nome-alimento">
+  <h2>{{ alimento.nome }}</h2>
+  </div>
+
   <div class="imagem-container">
     <img [src]="alimento.imagem" alt="Imagem do alimento" />
   </div>

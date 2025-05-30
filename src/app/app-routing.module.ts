@@ -49,10 +49,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/adicionar-alimento/adicionar-alimento.module').then( m => m.AdicionarAlimentoPageModule)
   },
   {
-    path: 'menu-alimentos-disponiveis',
-    loadChildren: () => import('./pages/menu-alimentos-disponiveis/menu-alimentos-disponiveis.module').then( m => m.MenuAlimentosDisponiveisPageModule)
-  },
-  {
     path: 'inserir-manualmente',
     loadChildren: () => import('./pages/inserir-manualmente/inserir-manualmente.module').then( m => m.InserirManualmentePageModule)
   },

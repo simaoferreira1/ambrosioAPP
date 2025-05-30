@@ -1,22 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  standalone: false,
   selector: 'app-alimento',
   templateUrl: './alimento.page.html',
   styleUrls: ['./alimento.page.scss'],
+  standalone: false
 })
-export class AlimentoPage {
-  alimento = {
-    nome: 'Maçã',
-    imagem: 'assets/macas.jpg',
-    quantidade: '5 maçãs',
-    dataCompra: '19-03-2025',
-    dataValidade: '26-03-2025'
+export class AlimentoPage implements OnInit {
+  alimento: any = {
+    nome: '',
+    imagem: '',
+    quantidade: '',
+    dataCompra: '',
+    dataValidade: ''
   };
 
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private route: ActivatedRoute,
+    private alertController: AlertController
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.alimento = {
+        nome: params['nome'],
+        imagem: params['imagem'],
+        quantidade: params['quantidade'],
+        dataCompra: params['dataCompra'],
+        dataValidade: params['dataValidade']
+      };
+    });
+  }
 
   async confirmarRemocao() {
     const alert = await this.alertController.create({
@@ -41,6 +57,6 @@ export class AlimentoPage {
 
   removerAlimento() {
     console.log('Alimento removido:', this.alimento.nome);
-    // fazer a lógica quando a api estiver on
+    // Lógica da API futura
   }
 }
