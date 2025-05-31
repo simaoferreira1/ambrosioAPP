@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn-voltar" routerLink="/adicionar-alimento">
+      <ion-button class="botao-verde-claro" routerLink="/adicionar-alimento">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
@@ -33,41 +33,47 @@
     </ion-item>
 
     <ion-item>
-  <ion-label position="stacked">Data de compra</ion-label>
-  <ion-button fill="clear" (click)="abrirCalendarioCompra()" class="btn-calendario">
-    <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
-  </ion-button>
-</ion-item>
+      <ion-label position="stacked">Data de compra</ion-label>
+      <ion-button fill="clear" (click)="abrirCalendarioCompra()" class="btn-calendario">
+        <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
 
-<ion-modal [isOpen]="mostrarCalendarioCompra" (didDismiss)="mostrarCalendarioCompra = false">
-  <ion-content>
-    <ion-datetime
-      presentation="date"
-      [(ngModel)]="dataCompra"
-      name="dataCompra"
-      (ionChange)="mostrarCalendarioCompra = false">
-    </ion-datetime>
-  </ion-content>
-</ion-modal>
+    <ion-modal [isOpen]="mostrarCalendarioCompra" (didDismiss)="mostrarCalendarioCompra = false">
+      <ion-content>
+        <ion-datetime
+          presentation="date"
+          [(ngModel)]="dataCompra"
+          name="dataCompra"
+          (ionChange)="mostrarCalendarioCompra = false">
+        </ion-datetime>
+      </ion-content>
+    </ion-modal>
 
-<ion-item>
-  <ion-label position="stacked">Data de validade</ion-label>
-  <ion-button fill="clear" (click)="abrirCalendarioValidade()" class="btn-calendario">
-    <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
-  </ion-button>
-</ion-item>
+    <ion-item>
+      <ion-label position="stacked">Data de validade</ion-label>
+      <ion-button fill="clear" (click)="abrirCalendarioValidade()" class="btn-calendario">
+        <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
 
-<ion-modal [isOpen]="mostrarCalendarioValidade" (didDismiss)="mostrarCalendarioValidade = false">
-  <ion-content>
-    <ion-datetime
-      presentation="date"
-      [(ngModel)]="dataValidade"
-      name="dataValidade"
-      (ionChange)="mostrarCalendarioValidade = false">
-    </ion-datetime>
-  </ion-content>
-</ion-modal>
-
-
+    <ion-modal [isOpen]="mostrarCalendarioValidade" (didDismiss)="mostrarCalendarioValidade = false">
+      <ion-content>
+        <ion-datetime
+          presentation="date"
+          [(ngModel)]="dataValidade"
+          name="dataValidade"
+          (ionChange)="mostrarCalendarioValidade = false">
+        </ion-datetime>
+      </ion-content>
+    </ion-modal>
   </form>
+
+  
+  <div class="botao-fixo-container">
+    <ion-button expand="block" class="botao-adicionar" (click)="guardarAlimento()">
+      Adicionar
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </div>
 </ion-content>

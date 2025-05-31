@@ -3,16 +3,31 @@
     --background: white;
     --color: black;
 
-    .btn-voltar {
-      background-color: #d4f5d3;
-      border-radius: 20px;
-      font-weight: 500;
-      padding: 6px 14px;
-      color: black;
-      font-size: 14px;
-    }
+    .botao-verde-claro {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
 
-    
+  --color: black;
+  --border-radius: 20px;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+ion-button.botao-verde-claro::part(native) {
+  border-radius: 20px;
+}
   }
 
   ion-content {
@@ -36,6 +51,51 @@
           font-size: 16px;
         }
       }
+
+      .btn-calendario {
+        --padding-start: 0;
+        --padding-end: 0;
+      }
+
+      .botao-adicionar {
+        --background: #d9f3cf !important;
+        --background-hover: #c8eabf !important;
+        --background-activated: #bce3b4 !important;
+        --color: black;
+
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 20px;
+        padding: 12px;
+        margin-top: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      ion-button.botao-adicionar::part(native) {
+        border-radius: 20px;
+      }
     }
   }
+}
+
+
+.botao-fixo-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.botao-adicionar {
+  --background: #d9f3cf;
+  --color: black;
+  font-weight: bold;
+  font-size: 16px;
+  height: 50px;
+  border-radius: 25px;
 }

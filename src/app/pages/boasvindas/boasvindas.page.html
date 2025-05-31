@@ -1,6 +1,5 @@
-<ion-content class="ion-padding">
-
-  <div class="ion-text-center">
+<ion-content class="ion-padding compact-content">
+  <div class="ion-text-center top-section">
     <img src="assets/chef.png" alt="Chef Ambrósio" class="chef-img">
     <h2>Eu sou o Ambrósio, o seu chef pessoal!</h2>
   </div>
@@ -9,9 +8,9 @@
     O Ambrósio ajuda-o a gerir os alimentos que tem em casa, criar listas de compras e até descobrir receitas com o que já tem disponível.
   </p>
 
-  <h3><strong>Por que usar o Ambrósio?</strong></h3>
+  <h3 class="section-title"><strong>Por que usar o Ambrósio?</strong></h3>
 
-  <ion-list lines="none">
+  <ion-list lines="none" class="benefits-list">
     <ion-item>
       <ion-icon name="cash-outline" slot="start"></ion-icon>
       <ion-label>
@@ -36,10 +35,11 @@
       </ion-label>
     </ion-item>
   </ion-list>
-
-  <ion-button expand="block" color="success" (click)="avancar()">
-  Avançar <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-</ion-button>
-
-
 </ion-content>
+
+<ion-footer class="ion-padding">
+  <ion-button expand="block" class="botao-avancar" (click)="avancar()">
+    Avançar <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+  </ion-button>
+</ion-footer>
+

@@ -1,9 +1,62 @@
-.chef-img {
-  width: 130px;
-  margin-bottom: 10px;
+.compact-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.top-section img.chef-img {
+  max-width: 300px;
+  margin: 0 auto 12px auto;
+  display: block;
+}
+
+.top-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
 }
 
 .descricao {
-  text-align: justify;
-  margin: 20px 0;
+  font-size: 1rem;
+  margin: 0 16px 20px 16px;
+  text-align: center;
+}
+
+.section-title {
+  margin: 0 16px 16px 16px;
+  font-size: 1.1rem;
+}
+
+.benefits-list ion-item {
+  margin-bottom: 12px;
+}
+
+ion-footer {
+  position: sticky;
+  bottom: 0;
+  background: white;
+}
+
+.botao-avancar {
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black;
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+ion-button.botao-avancar::part(native) {
+  border-radius: 20px;
 }

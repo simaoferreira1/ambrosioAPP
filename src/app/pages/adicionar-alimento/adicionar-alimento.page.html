@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn-voltar" routerLink="/tabs/tab2">
+      <ion-button class="botao-verde-claro" routerLink="/tabs/tab2">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
@@ -10,6 +10,18 @@
 </ion-header>
 
 <ion-content class="pagina-opcoes">
+
+  <!-- Imagem do Chef Ambrósio -->
+  <div class="chef-container">
+    <img src="assets/chef.png" alt="Chef Ambrósio" class="chef-img">
+  </div>
+
+  <!-- Pergunta divertida -->
+  <ion-text class="ion-text-center">
+    <h2> Como deseja inserir os alimentos?<br></h2>
+  </ion-text>
+
+  <!-- Botões -->
   <div class="opcoes-container">
     <ion-button expand="block" fill="outline" shape="round" class="opcao-btn" routerLink="/inserir-manualmente">
       Inserir manualmente
@@ -21,4 +33,5 @@
       <ion-icon slot="end" name="barcode-outline"></ion-icon>
     </ion-button>
   </div>
+
 </ion-content>

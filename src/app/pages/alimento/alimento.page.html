@@ -1,21 +1,23 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="botao-verde-claro" shape="round" routerLink="/tabs/tab2">
+      <ion-button class="botao-voltar" shape="round" routerLink="/tabs/tab2">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
     </ion-buttons>
+
     <ion-buttons slot="end">
-      <ion-button class="botao-verde-claro-vermelho" shape="round" (click)="confirmarRemocao()">
-      <ion-icon slot="start" name="trash-outline"></ion-icon>
-      Remover
+      <ion-button class="botao-remover" shape="round" (click)="confirmarRemocao()">
+        <ion-icon slot="start" name="trash-outline"></ion-icon>
+        Remover
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
   <div class="nome-alimento">
     <h2>{{ alimento.nome }}</h2>
   </div>
@@ -24,16 +26,21 @@
     <img [src]="alimento.imagem" alt="Imagem do alimento" />
   </div>
 
-  <ion-card>
-    <ion-card-content>
-      <ion-label class="detalhe"><strong>Quantidade</strong></ion-label>
+  <div class="dados-alimento">
+    <div class="dado">
+      <label>Quantidade</label>
       <p>{{ alimento.quantidade }}</p>
+    </div>
 
-      <ion-label class="detalhe"><strong>Data de compra</strong></ion-label>
+    <div class="dado">
+      <label>Data de compra</label>
       <p>{{ alimento.dataCompra }}</p>
+    </div>
 
-      <ion-label class="detalhe"><strong>Data de validade</strong></ion-label>
+    <div class="dado">
+      <label>Data de validade</label>
       <p>{{ alimento.dataValidade }}</p>
-    </ion-card-content>
-  </ion-card>
+    </div>
+  </div>
+
 </ion-content>

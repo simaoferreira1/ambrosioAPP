@@ -10,15 +10,15 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Password</ion-label>
+    <ion-label position="floating">Palavra-Passe</ion-label>
     <ion-input type="password"></ion-input>
   </ion-item>
 
-  <div class="ion-text-center" style="margin-top: 10px;">
-    <a routerLink="/registo">Ainda não tem conta? <strong>Registe-se</strong></a>
-  </div>
-
-  <ion-button expand="block" color="success" style="margin-top: 20px;" (click)="login()">
+  <ion-button expand="block" class="botao-login" style="margin-top: 20px;" (click)="login()">
     Login
   </ion-button>
+
+  <ion-text class="ion-text-center" style="margin-top: 10px; display: block;">
+    Ainda não tem conta? <a routerLink="/registo"><strong>Registe-se</strong></a>
+  </ion-text>
 </ion-content>

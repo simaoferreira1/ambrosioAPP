@@ -5,83 +5,14 @@ ion-toolbar {
   justify-content: space-between;
 }
 
-.imagem-container {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-ion-card {
-  margin: 20px;
-  border-radius: 16px;
-  box-shadow: none;
-}
-
-ion-label.detalhe {
-  margin-top: 12px;
-  font-size: 16px;
-}
-
-p {
-  margin: 4px 0 12px 0;
-  color: #333;
-}
-
-.alert-personalizado {
-  --backdrop-opacity: 0.3;
-  --border-radius: 20px;
-  --min-width: 80%;
-  ion-alert-button {
-    justify-content: center;
-  }
-}
-
-.btn-sim,
-.btn-nao {
-  background-color: #d4f2db;
-  color: #2f6e43;
-  border-radius: 20px;
-}
-
-.botao-verde-claro {
+.botao-voltar,
+.botao-remover {
   --background: #d9f3cf !important;
   --background-hover: #d9f3cf !important;
   --background-activated: #d9f3cf !important;
   --background-focused: #d9f3cf !important;
 
   --color: black;
-  font-weight: bold;
-  font-size: 16px;
-
-  height: 44px;
-  width: 120px; /* MESMO TAMANHO FIXO */
-  padding: 0;
-  border-radius: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-
-.botao-verde-claro-vermelho {
-  --background: #d9f3cf !important;
-  --background-hover: #d9f3cf !important;
-  --background-activated: #d9f3cf !important;
-  --background-focused: #d9f3cf !important;
-
-  --color: #d00000; /* vermelho escuro */
   font-weight: bold;
   font-size: 16px;
 
@@ -94,4 +25,51 @@ p {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.botao-remover {
+  --color: #d00000 !important; // texto vermelho
+}
+
+.nome-alimento h2 {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 20px;
+}
+
+.imagem-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+}
+
+.dados-alimento {
+  padding: 0 20px;
+
+  .dado {
+    margin-bottom: 16px;
+
+    label {
+      font-weight: bold;
+      color: #444;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    p {
+      margin: 0;
+      color: #555;
+    }
+  }
 }

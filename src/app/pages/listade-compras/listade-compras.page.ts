@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Share } from '@capacitor/share';
 
 @Component({
   standalone: false,
@@ -28,7 +28,17 @@ export class ListadeComprasPage implements OnInit {
     'Chocolate de cozinha',
   ];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
+
+  async partilharLista() {
+    const texto = this.listaCompras.join(', ');
+
+    await Share.share({
+      title: 'Lista de Compras',
+      text: `Aqui está a minha lista de compras:\n${texto}`,
+      dialogTitle: 'Partilhar Lista'
+    });
+  }
 }
