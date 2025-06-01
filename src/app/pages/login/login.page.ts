@@ -1,19 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit }   from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router }              from '@angular/router';
+import { ToastController }     from '@ionic/angular';
+import { AuthService, User }   from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class LoginPage implements OnInit {
+  loginForm!: FormGroup;
+  submitted = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private fb:    FormBuilder,
+    private auth:  AuthService,
+    private router: Router,
+    private toast: ToastController
+  ) {}
 
-  ngOnInit() {}
-
-  login() {
-    this.router.navigateByUrl('/boasvindas');
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email:    ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
+
+  async onSubmit() {
+    this.submitted = true;
+    if (this.loginForm.invalid) {
+      const toast = await this.toast.create({
+        message: 'Por favor, corrija os erros antes de continuar.',
+        duration: 2000,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+    try {
+      const user: User = await this.auth.login(email, password);
+      await this.toast.create({
+        message: `Bem-vindo, ${user.name}!`,
+        duration: 1500
+      }).then(t => t.present());
+      this.router.navigateByUrl('/boasvindas', { replaceUrl: true });
+    } catch (err: any) {
+      await this.toast.create({
+        message: err.message || 'Falha no login',
+        duration: 2000,
+        color: 'danger'
+      }).then(t => t.present());
+    }
+  }
+
+  // Easy getters for template
+  get f() { return this.loginForm.controls; }
 }

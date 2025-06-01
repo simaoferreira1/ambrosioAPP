@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiBase: 'https://prisma-api-three.vercel.app/api/v1'
 };

@@ -13,6 +13,7 @@
       *ngFor="let alimento of alimentos"
       [routerLink]="['/alimento']"
       [queryParams]="{
+        id: alimento.id,
         nome: alimento.nome,
         imagem: alimento.imagem,
         quantidade: alimento.quantidade,

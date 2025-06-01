@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { FoodService } from 'src/app/services/food.service';
 
 @Component({
   selector: 'app-alimento',
@@ -9,7 +10,15 @@ import { AlertController } from '@ionic/angular';
   standalone: false
 })
 export class AlimentoPage implements OnInit {
-  alimento: any = {
+  alimento: {
+    id: number;
+    nome: string;
+    imagem: string;
+    quantidade: string;
+    dataCompra: string;
+    dataValidade: string;
+  } = {
+    id: 0,
     nome: '',
     imagem: '',
     quantidade: '',
@@ -19,12 +28,16 @@ export class AlimentoPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private foodService: FoodService,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    // Subscribe to queryParams and assign id + fields
     this.route.queryParams.subscribe(params => {
       this.alimento = {
+        id: Number(params['id']),           // Must match "id" from Tab2 queryParams
         nome: params['nome'],
         imagem: params['imagem'],
         quantidade: params['quantidade'],
@@ -56,7 +69,26 @@ export class AlimentoPage implements OnInit {
   }
 
   removerAlimento() {
-    console.log('Alimento removido:', this.alimento.nome);
-    // Lógica da API futura
+    if (!this.alimento.id) {
+      console.error('ID inválido ao tentar remover.');
+      return;
+    }
+
+    this.foodService.deleteFood(this.alimento.id).subscribe({
+      next: () => {
+        console.log('✅ Alimento removido no servidor, ID:', this.alimento.id);
+        // After deletion, navigate back to Tab 2
+        this.router.navigateByUrl('/tabs/tab2');
+      },
+      error: async err => {
+        console.error('❌ Erro ao remover alimento:', err);
+        const errorAlert = await this.alertController.create({
+          header: 'Erro',
+          message: 'Falha ao remover o alimento. Por favor tente novamente.',
+          buttons: ['OK']
+        });
+        await errorAlert.present();
+      }
+    });
   }
 }

@@ -1,31 +1,119 @@
 <ion-content class="ion-padding">
   <div class="ion-text-center">
-    <img src="assets/logo.png" alt="Logo" class="logo">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
     <h2>Ambrósio, o seu chef invisível!</h2>
   </div>
 
-  <ion-item>
-    <ion-label position="floating">Nome</ion-label>
-    <ion-input type="text"></ion-input>
-  </ion-item>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <ion-grid fixed class="ion-margin-top">
 
-  <ion-item>
-    <ion-label position="floating">E-mail</ion-label>
-    <ion-input type="email"></ion-input>
-  </ion-item>
+      <!-- Name Field -->
+      <ion-row>
+        <ion-col>
+          <ion-input
+            label="Nome"
+            label-placement="floating"
+            fill="outline"
+            formControlName="name"
+            type="text"
+          ></ion-input>
+          <ion-text
+            color="danger"
+            *ngIf="
+              (f['name'].invalid && (f['name'].dirty || f['name'].touched))
+              || (submitted && f['name'].invalid)
+            "
+          >
+            <small *ngIf="f['name'].errors?.['required']">
+              Nome é obrigatório.
+            </small>
+            <small *ngIf="f['name'].errors?.['minlength']">
+              Nome deve ter pelo menos 2 caracteres.
+            </small>
+          </ion-text>
+        </ion-col>
+      </ion-row>
 
-  <ion-item>
-    <ion-label position="floating">Password</ion-label>
-    <ion-input type="password"></ion-input>
-  </ion-item>
+      <!-- Email Field -->
+      <ion-row>
+        <ion-col>
+          <ion-input
+            label="E-mail"
+            label-placement="floating"
+            fill="outline"
+            formControlName="email"
+            type="email"
+          ></ion-input>
+          <ion-text
+            color="danger"
+            *ngIf="
+              (f['email'].invalid && (f['email'].dirty || f['email'].touched))
+              || (submitted && f['email'].invalid)
+            "
+          >
+            <small *ngIf="f['email'].errors?.['required']">
+              E-mail é obrigatório.
+            </small>
+            <small *ngIf="f['email'].errors?.['email']">
+              Formato de e-mail inválido.
+            </small>
+          </ion-text>
+        </ion-col>
+      </ion-row>
 
-  <ion-button expand="block" color="success" style="margin-top: 20px;">
-    Registar
-  </ion-button>
+      <!-- Password Field -->
+      <ion-row>
+        <ion-col>
+          <ion-input
+            label="Password"
+            label-placement="floating"
+            fill="outline"
+            formControlName="password"
+            type="password"
+          ></ion-input>
+          <ion-text
+            color="danger"
+            *ngIf="
+              (f['password'].invalid && (f['password'].dirty || f['password'].touched))
+              || (submitted && f['password'].invalid)
+            "
+          >
+            <small *ngIf="f['password'].errors?.['required']">
+              Password é obrigatória.
+            </small>
+            <small *ngIf="f['password'].errors?.['minlength']">
+              Password deve ter ao menos 6 caracteres.
+            </small>
+          </ion-text>
+        </ion-col>
+      </ion-row>
 
-  <ion-text class="ion-text-center" style="margin-top: 16px; display: block;">
-    Já tem conta?
-    <a routerLink="/login">Login</a>
-  </ion-text>
+      <!-- Register Button -->
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <ion-button
+            expand="block"
+            color="success"
+            shape="round"
+            type="submit"
+            class="ion-margin"
+            [disabled]="registerForm.invalid && submitted"
+          >
+            Registar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- Link to Login -->
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <p>
+            Já tem conta?
+            <a (click)="goToLogin()" class="link">Entrar</a>
+          </p>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
 </ion-content>
-

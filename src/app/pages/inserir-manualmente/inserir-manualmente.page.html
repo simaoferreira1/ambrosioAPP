@@ -6,68 +6,88 @@
         Voltar
       </ion-button>
     </ion-buttons>
+    <ion-title>Adicionar Alimento</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" class="formulario">
+  <form #form="ngForm" class="formulario" (ngSubmit)="guardarAlimento()">
+    <ion-list lines="full" class="ion-padding">
 
-    <ion-item>
-      <ion-label position="stacked">Produto</ion-label>
-      <ion-input
-        type="text"
-        name="produto"
-        [(ngModel)]="produto"
-        placeholder="Ex: Maçã">
-      </ion-input>
-    </ion-item>
+      <!-- Produto -->
+      <ion-item>
+        <ion-label position="stacked">Produto</ion-label>
+        <ion-input
+          type="text"
+          name="produto"
+          [(ngModel)]="produto"
+          required
+          placeholder="Ex: Maçã">
+        </ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Quantidade</ion-label>
-      <ion-input
-        type="number"
-        name="quantidade"
-        [(ngModel)]="quantidade"
-        placeholder="Ex: 3">
-      </ion-input>
-    </ion-item>
+      <!-- Quantidade -->
+      <ion-item>
+        <ion-label position="stacked">Quantidade</ion-label>
+        <ion-input
+          type="number"
+          name="quantidade"
+          [(ngModel)]="quantidade"
+          required
+          placeholder="Ex: 3">
+        </ion-input>
+      </ion-item>
 
-    <ion-item>
-  <ion-label position="stacked">Data de compra</ion-label>
-  <ion-button fill="clear" (click)="abrirCalendarioCompra()" class="btn-calendario">
-    <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
-  </ion-button>
-</ion-item>
+      <!-- Data de Compra -->
+      <ion-item>
+        <ion-label position="stacked">Data de compra</ion-label>
+        <ion-button fill="clear" (click)="abrirCalendarioCompra()" class="btn-calendario">
+          <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-modal
+        [isOpen]="mostrarCalendarioCompra"
+        (didDismiss)="mostrarCalendarioCompra = false"
+      >
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="dataCompra"
+              name="dataCompra"
+              (ionChange)="mostrarCalendarioCompra = false">
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
 
-<ion-modal [isOpen]="mostrarCalendarioCompra" (didDismiss)="mostrarCalendarioCompra = false">
-  <ion-content>
-    <ion-datetime
-      presentation="date"
-      [(ngModel)]="dataCompra"
-      name="dataCompra"
-      (ionChange)="mostrarCalendarioCompra = false">
-    </ion-datetime>
-  </ion-content>
-</ion-modal>
+      <!-- Data de Validade -->
+      <ion-item>
+        <ion-label position="stacked">Data de validade</ion-label>
+        <ion-button fill="clear" (click)="abrirCalendarioValidade()" class="btn-calendario">
+          <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-modal
+        [isOpen]="mostrarCalendarioValidade"
+        (didDismiss)="mostrarCalendarioValidade = false"
+      >
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="dataValidade"
+              name="dataValidade"
+              (ionChange)="mostrarCalendarioValidade = false">
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
 
-<ion-item>
-  <ion-label position="stacked">Data de validade</ion-label>
-  <ion-button fill="clear" (click)="abrirCalendarioValidade()" class="btn-calendario">
-    <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
-  </ion-button>
-</ion-item>
-
-<ion-modal [isOpen]="mostrarCalendarioValidade" (didDismiss)="mostrarCalendarioValidade = false">
-  <ion-content>
-    <ion-datetime
-      presentation="date"
-      [(ngModel)]="dataValidade"
-      name="dataValidade"
-      (ionChange)="mostrarCalendarioValidade = false">
-    </ion-datetime>
-  </ion-content>
-</ion-modal>
-
-
+      <!-- Botão Guardar -->
+      <ion-button expand="block" color="primary" type="submit" class="ion-margin-top">
+        Guardar
+      </ion-button>
+    </ion-list>
   </form>
 </ion-content>
