@@ -1,7 +1,9 @@
+<!-- src/app/pages/fazer-scan/fazer-scan.page.html -->
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn-voltar" routerLink="/menu-alimentos-disponiveis">
+      <ion-button class="btn-voltar" routerLink="/adicionar-alimento">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
@@ -16,16 +18,15 @@
 </ion-header>
 
 <ion-content class="fazer-scan-content">
-
-  <!-- Imagem do produto -->
-  <div class="imagem-container">
+  <!-- Imagem do produto e overlay para iniciar scan -->
+  <div class="imagem-container" (click)="iniciarScan()">
     <img [src]="imagemProduto" alt="Produto" />
     <div class="scanner-overlay">
       <ion-icon name="scan-outline"></ion-icon>
     </div>
   </div>
 
-  <!-- Dados do produto -->
+  <!-- Campos preenchidos após scan, editáveis pelo usuário -->
   <div class="detalhes-container">
     <ion-label class="campo">
       <p class="campo-label">Produto</p>
@@ -34,18 +35,17 @@
 
     <ion-label class="campo">
       <p class="campo-label">Quantidade</p>
-      <p class="campo-valor">{{ quantidade }}</p>
+      <ion-input [(ngModel)]="quantidade" placeholder="Ex: 330ml"></ion-input>
     </ion-label>
 
     <ion-label class="campo">
       <p class="campo-label">Data de compra</p>
-      <p class="campo-valor">{{ dataCompra }}</p>
+      <ion-input [(ngModel)]="dataCompra" placeholder="DD-MM-AAAA"></ion-input>
     </ion-label>
 
     <ion-label class="campo">
       <p class="campo-label">Data de validade</p>
-      <p class="campo-valor">{{ dataValidade }}</p>
+      <ion-input [(ngModel)]="dataValidade" placeholder="DD-MM-AAAA"></ion-input>
     </ion-label>
   </div>
-
 </ion-content>

@@ -7,16 +7,17 @@
     <ion-icon name="close-outline" class="icon-right"></ion-icon>
   </div>
 
+  <!-- Swiper: will show either the soon-to-expire foods or your placeholders -->
   <swiper-container
-  slides-per-view="1"
-  space-between="10"
-  pagination="true"
-  autoplay-delay="2500"
-  loop="true"
+    slides-per-view="1"
+    space-between="10"
+    pagination="true"
+    autoplay-delay="2500"
+    loop="true"
   >
     <swiper-slide *ngFor="let item of slides">
       <ion-card class="custom-card">
-        <img [src]="item.img" alt="Product Image" />
+        <img [src]="item.img" alt="Food Image" />
         <ion-card-content>
           <h2><strong>{{ item.title }}</strong></h2>
           <p>{{ item.subtitle }}</p>

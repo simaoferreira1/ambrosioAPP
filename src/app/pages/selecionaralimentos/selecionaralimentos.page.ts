@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, User } from '../../services/auth.service';
+import { FoodService, Food } from '../../services/food.service';
 
 @Component({
   selector: 'app-selecionaralimentos',
@@ -7,27 +9,60 @@ import { Router } from '@angular/router';
   styleUrls: ['./selecionaralimentos.page.scss'],
   standalone: false,
 })
-export class SelecionaralimentosPage implements OnInit {
+export class SelecionaralimentosPage {
+  alimentos: Array<{
+    nome: string;
+    imagem: string;
+    selecionado: boolean;
+  }> = [];
 
-  alimentos = [
-    { nome: 'Carne de vaca moída', imagem: 'assets/carne.jpg', selecionado: true },
-    { nome: 'Alface', imagem: 'assets/alface.jpg', selecionado: true },
-    { nome: 'Arroz', imagem: 'assets/arroz.jpg', selecionado: false },
-    { nome: 'Feijão verde', imagem: 'assets/feijao.jpg', selecionado: false },
-    { nome: 'Massa esparguete', imagem: 'assets/massa.jpg', selecionado: true },
-    { nome: 'Laranjas', imagem: 'assets/laranja.jpg', selecionado: true },
-    { nome: 'Bife de frango', imagem: 'assets/frango.jpg', selecionado: false },
-    { nome: 'Queijo flamengo fatiado', imagem: 'assets/queijo.jpg', selecionado: false },
-    { nome: 'Bróculos', imagem: 'assets/brocolos.jpg', selecionado: false },
-    { nome: 'Costelas do cachaço', imagem: 'assets/costeletas.jpg', selecionado: false },
-    { nome: 'Maçãs', imagem: 'assets/macas.jpg', selecionado: false },
-  ];
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private foodService: FoodService
+  ) {}
 
-  constructor(private router: Router) {}
+  /**
+   * Every time this page becomes active, load the user's foods.
+   */
+  async ionViewWillEnter() {
+    // 1) Get current user
+    const user: User | null = await this.authService.getCurrentUser();
+    if (!user) {
+      // If no user is logged in, leave alimentos empty
+      this.alimentos = [];
+      return;
+    }
 
-  ngOnInit() {}
+    // 2) Fetch foods for this user
+    this.foodService.getFoods(user.id).subscribe(
+      (foods: Food[]) => {
+        // 3) Map each Food into { nome, imagem, selecionado }
+        this.alimentos = foods.map(f => ({
+          nome: f.name,
+          imagem: f.image?.url || 'assets/placeholder.png',
+          selecionado: false  // default to unchecked
+        }));
+      },
+      err => {
+        console.error('Erro ao obter alimentos:', err);
+        // On error, keep alimentos empty or show a message
+        this.alimentos = [];
+      }
+    );
+  }
 
+  /**
+   * Navigate to the loading page, passing selected food names as queryParams.
+   */
   irParaCarregamento() {
-    this.router.navigate(['/carregamento']);
+    const selecionados = this.alimentos
+      .filter(a => a.selecionado)
+      .map(a => a.nome);
+
+    // Pass the selected names as a comma-separated string
+    this.router.navigate(['/carregamento'], {
+      queryParams: { foods: selecionados.join(',') }
+    });
   }
 }

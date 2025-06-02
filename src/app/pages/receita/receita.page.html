@@ -1,7 +1,14 @@
+<!-- src/app/pages/receita/receita.page.html -->
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button fill="solid" color="success" shape="round" [routerLink]="['/selecionaralimentos']">
+      <ion-button
+        fill="solid"
+        color="success"
+        shape="round"
+        [routerLink]="['/selecionaralimentos']"
+      >
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Voltar
       </ion-button>
@@ -10,35 +17,34 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Display recipe name -->
+  <h2 *ngIf="name"><strong>{{ name }}</strong></h2>
 
-  <h2><strong>Esparguete com Carne Moída ao Molho de Laranja e Salada</strong></h2>
+  <!-- Display photo if available -->
+  <div *ngIf="photo" style="text-align:center; margin: 15px 0;">
+    <img
+      [src]="photo"
+      alt="Imagem da receita"
+      style="width: 100%; border-radius: 10px;"
+    />
+  </div>
 
-  <p><strong>Ingredientes:</strong></p>
-  <ul>
-    <li>250g de esparguete</li>
-    <li>300g de carne moída</li>
-    <li>1 dente de alho picado</li>
-    <li>1/2 cebola picada</li>
-    <li>1 colher (sopa) de azeite</li>
-    <li>Sumo de 1 laranja</li>
-    <li>Raspas da casca de 1 laranja</li>
-    <li>Sal e pimenta a gosto</li>
-    <li>Folhas de alface picadas</li>
-  </ul>
+  <!-- Ingredients list -->
+  <div *ngIf="ingredients && ingredients.length">
+    <p><strong>Ingredientes:</strong></p>
+    <ul>
+      <li *ngFor="let item of ingredients">{{ item }}</li>
+    </ul>
+  </div>
 
-  <img src="assets/receita.jpg" alt="Esparguete com carne" style="width: 100%; border-radius: 10px; margin: 15px 0;" />
+  <!-- Instructions -->
+  <div *ngIf="instructions">
+    <p><strong>Modo de Preparo:</strong></p>
+    <p [innerHTML]="instructions"></p>
+  </div>
 
-  <p><strong>Modo de Preparo:</strong></p>
-  <p>
-    Comece por pôr em uma panela com água a ferver com sal, cozinhe o esparguete até ficar al dente. Escorra e reserve.<br />
-    Em uma frigideira, aqueça o azeite e refogue a cebola e o alho até dourarem. Depois adicione a carne moída e cozinhe até dourar bem.<br />
-    Quando a carne estiver quase pronta adicione o sumo de laranja e deixe cozinhar por mais 5 minutos.
-  </p>
-
-  <p><strong>Empratamento:</strong></p>
-  <p>
-    Misture o esparguete com a carne e o molho.<br />
-    Sirva no prato e finalize com a alface picada por cima.
-  </p>
-
+  <!-- Fallback message if no ingredients and no instructions -->
+  <div *ngIf="!ingredients.length && !instructions">
+    <p>Desculpe, não há receita para exibir.</p>
+  </div>
 </ion-content>

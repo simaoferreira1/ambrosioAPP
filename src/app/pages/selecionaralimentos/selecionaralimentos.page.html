@@ -2,19 +2,18 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button class="botao-verde-claro" shape="round" [routerLink]="['/tabs/tab1']">
-  <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-  Voltar
-</ion-button>
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        Voltar
+      </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button class="botao-verde-claro" shape="round" (click)="irParaCarregamento()">
-  Seguinte
-  <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
-</ion-button>
+        Seguinte
+        <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content class="ion-padding">
 
@@ -26,7 +25,7 @@
     ></ion-input>
   </ion-item>
 
-  <!-- Lista de alimentos -->
+  <!-- Lista de alimentos puxada da API -->
   <ion-list>
     <ion-item *ngFor="let alimento of alimentos">
       <ion-avatar slot="start">

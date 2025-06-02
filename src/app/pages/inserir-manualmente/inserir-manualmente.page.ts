@@ -33,10 +33,10 @@ export class InserirManualmentePage implements OnInit {
     const user: User | null = await this.authService.getCurrentUser();
     if (user && user.id) {
       this.currentUserId = user.id;
-      console.log('ℹ️ Current user ID:', this.currentUserId);
+      console.log('Current user ID:', this.currentUserId);
     } else {
       // Not logged in → redirect to login
-      console.warn('⚠️ Usuário não autenticado. Redirecionando para login...');
+      console.warn('Usuário não autenticado. Redirecionando para login...');
       this.router.navigateByUrl('/login');
     }
   }
@@ -82,14 +82,14 @@ export class InserirManualmentePage implements OnInit {
     // 3) Call the API
     this.foodService.addFood(payload as any).subscribe(
       async (createdFood: Food) => {
-        console.log('✅ Food criado no servidor:', createdFood);
+        console.log(' Food criado no servidor:', createdFood);
 
         // 4) Save it locally under "localFoods_user_<userId>"
         try {
           await this.foodService.addLocalFood(this.currentUserId, createdFood);
-          console.log('✅ Food salvo localmente:', createdFood);
+          console.log(' Food salvo localmente:', createdFood);
         } catch (storageErr) {
-          console.error('❌ Erro ao salvar localmente:', storageErr);
+          console.error(' Erro ao salvar localmente:', storageErr);
         }
 
         // 5) Clear form
@@ -101,7 +101,7 @@ export class InserirManualmentePage implements OnInit {
         alert('Alimento guardado com sucesso!');
       },
       (err) => {
-        console.error('❌ Erro ao criar food no servidor:', err);
+        console.error('Erro ao criar food no servidor:', err);
         // If backend returned {error:"…"}, show it
         if (err.error && err.error.error) {
           alert(`Falha: ${err.error.error}`);
