@@ -1,6 +1,8 @@
+// src/app/pages/alimento/alimento.page.ts
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { FoodService } from 'src/app/services/food.service';
 
 @Component({
@@ -29,20 +31,21 @@ export class AlimentoPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private alertController: AlertController,
+    private toastController: ToastController,
     private foodService: FoodService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    // Subscribe to queryParams and assign id + fields
+    // 1) Subscribe a queryParams para popular 'alimento'
     this.route.queryParams.subscribe(params => {
       this.alimento = {
-        id: Number(params['id']),           // Must match "id" from Tab2 queryParams
-        nome: params['nome'],
-        imagem: params['imagem'],
-        quantidade: params['quantidade'],
-        dataCompra: params['dataCompra'],
-        dataValidade: params['dataValidade']
+        id: Number(params['id'] || 0),  // Deve vir de Tab2
+        nome: params['nome'] || '',
+        imagem: params['imagem'] || '',
+        quantidade: params['quantidade'] || '',
+        dataCompra: params['dataCompra'] || '',
+        dataValidade: params['dataValidade'] || ''
       };
     });
   }
@@ -68,26 +71,39 @@ export class AlimentoPage implements OnInit {
     await alert.present();
   }
 
-  removerAlimento() {
+  async removerAlimento() {
     if (!this.alimento.id) {
       console.error('ID inválido ao tentar remover.');
+      const toast = await this.toastController.create({
+        message: 'ID inválido. Não foi possível remover.',
+        duration: 2000,
+        color: 'danger'
+      });
+      await toast.present();
       return;
     }
 
     this.foodService.deleteFood(this.alimento.id).subscribe({
-      next: () => {
+      next: async () => {
         console.log('✅ Alimento removido no servidor, ID:', this.alimento.id);
-        // After deletion, navigate back to Tab 2
+        const toast = await this.toastController.create({
+          message: 'Alimento removido com sucesso!',
+          duration: 2000,
+          color: 'success'
+        });
+        await toast.present();
+
+        // 3) Navegar de volta para Tab 2 depois de exibir o toast
         this.router.navigateByUrl('/tabs/tab2');
       },
       error: async err => {
         console.error('❌ Erro ao remover alimento:', err);
-        const errorAlert = await this.alertController.create({
-          header: 'Erro',
-          message: 'Falha ao remover o alimento. Por favor tente novamente.',
-          buttons: ['OK']
+        const toast = await this.toastController.create({
+          message: 'Falha ao remover produto. Tente novamente.',
+          duration: 3000,
+          color: 'danger'
         });
-        await errorAlert.present();
+        await toast.present();
       }
     });
   }

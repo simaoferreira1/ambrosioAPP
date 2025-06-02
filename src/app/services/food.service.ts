@@ -133,4 +133,45 @@ export class FoodService {
     filtered.push(realFood);
     await this.storage.set(key, filtered);
   }
+  /**
+   * DELETE /api/v1/foods/:id
+   * Remove o registro do servidor e também o remove de localStorage.
+   */
+  deleteFood(foodId: number): Observable<void> {
+    const url = `${this.apiBase}/foods/${foodId}`;
+    console.log('🔧 DELETE para:', url);
+
+    return new Observable<void>(observer => {
+      this.http.delete<void>(url).subscribe({
+        next: async () => {
+          // Remova também da storage local:
+          await this.removeFromLocal(foodId);
+          observer.next();
+          observer.complete();
+        },
+        error: err => {
+          observer.error(err);
+        }
+      });
+    });
+  }
+
+  /**
+   * Remove o Food com aquele ID de local storage (caso exista).
+   */
+  private async removeFromLocal(foodId: number) {
+    if (!this.storageReady) {
+      await this.storage.create();
+      this.storageReady = true;
+    }
+    // Como não sabemos o userId aqui, vamos iterar por todas as keys que comecem com "localFoods_user_"
+    const keys = await this.storage.keys();
+    for (const key of keys) {
+      if (key.startsWith('localFoods_user_')) {
+        const list: Food[] = (await this.storage.get(key)) || [];
+        const filtered = list.filter(f => f.id !== foodId);
+        await this.storage.set(key, filtered);
+      }
+    }
+  }
 }
