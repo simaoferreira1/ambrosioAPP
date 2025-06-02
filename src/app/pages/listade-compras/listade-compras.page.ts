@@ -28,44 +28,99 @@ export class ListadeComprasPage implements OnInit {
     'Chocolate de cozinha',
   ];
 
+  // Texto digitado no searchbar
+  searchText: string = '';
+
+  // Lista que será mostrada (filtrada)
+  filteredList: string[] = [];
+
   constructor(private toastController: ToastController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Inicialmente, exibe toda a lista
+    this.filteredList = [...this.listaCompras];
+  }
 
   /**
-   * Constrói um texto com a lista e abre o share sheet nativo.
+   * Atualiza `filteredList` conforme `searchText`.
    */
-  async compartilharLista() {
-    if (!this.listaCompras.length) {
-      const toast = await this.toastController.create({
-        message: 'A lista de compras está vazia.',
-        duration: 2000,
-        color: 'warning',
-      });
-      await toast.present();
-      return;
+  onSearchInput(event: any) {
+    this.searchText = event.target.value?.toLowerCase() || '';
+    if (!this.searchText) {
+      this.filteredList = [...this.listaCompras];
+    } else {
+      this.filteredList = this.listaCompras.filter(item =>
+        item.toLowerCase().includes(this.searchText)
+      );
     }
+  }
 
-    // 1) Construir o texto com cada item em nova linha
-    const header = 'Lista de compras:\n\n';
-    const bullets = this.listaCompras.map(item => `• ${item}`).join('\n');
-    const fullText = header + bullets;
+  /**
+   * Ao clicar em “Add”, usa o texto atual de `searchText` para adicionar um item.
+   */
+  async addNewItemFromSearch() {
+  const novo = this.searchText.trim();
+  if (!novo) {
+    const toast = await this.toastController.create({
+      message: 'Please enter something in the search field to add.',
+      duration: 2000,
+      color: 'warning'
+    });
+    await toast.present();
+    return;
+  }
 
-    try {
-      // 2) Chamar o Share plugin do Capacitor
-      await Share.share({
-        title: 'Minha Lista de Compras',
-        text: fullText,
-        dialogTitle: 'Partilhar lista de compras',
-      });
-    } catch (err) {
-      console.error('Erro ao compartilhar:', err);
-      const toast = await this.toastController.create({
-        message: 'Não foi possível abrir o compartilhamento.',
-        duration: 2000,
-        color: 'danger',
-      });
-      await toast.present();
-    }
+  if (this.listaCompras.some(item => item.toLowerCase() === novo.toLowerCase())) {
+    const toast = await this.toastController.create({
+      message: `The product "${novo}" is already in the list.`,
+      duration: 2000,
+      color: 'warning'
+    });
+    await toast.present();
+    return;
+  }
+
+  this.listaCompras.unshift(novo);
+  this.searchText = '';
+  this.filteredList = [...this.listaCompras];
+
+  const toast = await this.toastController.create({
+    message: `Product "${novo}" added.`,
+    duration: 2000,
+    color: 'success'
+  });
+  await toast.present();
+}
+
+async compartilharLista() {
+  if (!this.listaCompras.length) {
+    const toast = await this.toastController.create({
+      message: 'The shopping list is empty.',
+      duration: 2000,
+      color: 'warning',
+    });
+    await toast.present();
+    return;
+  }
+
+  const header = 'Shopping List:\n\n';
+  const bullets = this.listaCompras.map(item => `• ${item}`).join('\n');
+  const fullText = header + bullets;
+
+  try {
+    await Share.share({
+      title: 'My Shopping List',
+      text: fullText,
+      dialogTitle: 'Share Shopping List',
+    });
+  } catch (err) {
+    console.error('Share error:', err);
+    const toast = await this.toastController.create({
+      message: 'Unable to open sharing.',
+      duration: 2000,
+      color: 'danger',
+    });
+    await toast.present();
+  }
   }
 }
