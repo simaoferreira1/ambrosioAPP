@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" class="formulario" (ngSubmit)="guardarAlimento()">
+  <form #form="ngForm" id="formulario" class="formulario" (ngSubmit)="guardarAlimento()">
     <ion-list lines="full" class="ion-padding">
       <!-- Produto -->
       <ion-item>
@@ -92,12 +92,13 @@
           </ion-content>
         </ng-template>
       </ion-modal>
-
-      <!-- Botão Guardar -->
-      <ion-button expand="block" type="submit" class="save-button">
-        Add 
-        <ion-icon name="add-outline" slot="end"></ion-icon>
-      </ion-button>
     </ion-list>
   </form>
+
+  <div class="bottom-button-wrapper">
+    <ion-button expand="block" type="submit" class="save-button" form="formulario">
+      Add
+      <ion-icon name="add-outline" slot="end"></ion-icon>
+    </ion-button>
+  </div>
 </ion-content>

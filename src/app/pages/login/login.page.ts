@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
     this.submitted = true;
     if (this.loginForm.invalid) {
       const toast = await this.toast.create({
-        message: 'Por favor, corrija os erros antes de continuar.',
+        message: 'Please correct the errors before continuing.',
         duration: 2000,
         color: 'danger'
       });
@@ -44,13 +44,13 @@ export class LoginPage implements OnInit {
     try {
       const user: User = await this.auth.login(email, password);
       await this.toast.create({
-        message: `Bem-vindo, ${user.name}!`,
+        message: `Welcome, ${user.name}!`,
         duration: 1500
       }).then(t => t.present());
       this.router.navigateByUrl('/boasvindas', { replaceUrl: true });
     } catch (err: any) {
       await this.toast.create({
-        message: err.message || 'Falha no login',
+        message: err.message || 'Login failed',
         duration: 2000,
         color: 'danger'
       }).then(t => t.present());

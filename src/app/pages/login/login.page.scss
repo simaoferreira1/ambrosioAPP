@@ -5,9 +5,16 @@
 }
 
 ion-item.invalid {
-  /* Use Ionic CSS variables to control the outline */
   --border-style: solid;
   --border-width: 2px;
   --border-color: var(--ion-color-danger);
 }
 
+/* Botão de login com verde personalizado */
+.login-button {
+  --background: #d9f3cf;
+  --background-activated: #c5e8b7;
+  --background-hover: #eafaea;
+  --color: #000;
+  font-weight: bold;
+}

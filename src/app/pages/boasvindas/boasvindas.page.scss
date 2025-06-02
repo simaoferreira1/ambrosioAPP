@@ -7,3 +7,13 @@
   text-align: justify;
   margin: 20px 0;
 }
+
+/* Botão "Continue" com verde personalizado */
+.continue-button {
+  --background: #d9f3cf;
+  --background-activated: #c5e8b7;
+  --background-hover: #eafaea;
+  --color: #000;
+  font-weight: bold;
+  margin-top: 30px;
+}
