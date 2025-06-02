@@ -63,7 +63,7 @@
 }
 
 .botao-verde-claro {
-  --background: #d9f3cf !important;
+  --background: var(--cor-verde-claro) !important;
   --background-hover: #d9f3cf !important;
   --background-activated: #d9f3cf !important;
   --background-focused: #d9f3cf !important;
@@ -92,4 +92,11 @@
   // Se estiveres em SCSS puro
   @extend .botao-verde-claro;
   --color: #0066cc !important;
+}
+
+.share-button {
+  --background: #a0d8f1; // azul claro
+  --color: white;
+  --border-radius: 20px;
+  font-weight: bold;
 }

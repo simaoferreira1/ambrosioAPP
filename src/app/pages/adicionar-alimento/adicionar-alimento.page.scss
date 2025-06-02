@@ -4,8 +4,8 @@
     --color: black;
 
     .btn-voltar {
-  --background: #d9f3cf !important;
-  --background-hover: #d9f3cf !important;
+  --background: var(--cor-verde-claro) !important;
+  --background-hover: var(--cor-verde-claro)!important;
   --background-activated: #d9f3cf !important;
   --background-focused: #d9f3cf !important;
 
