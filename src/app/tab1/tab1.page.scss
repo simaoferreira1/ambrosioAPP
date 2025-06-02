@@ -10,36 +10,52 @@
   color: #000;
   font-size: 14px;
   font-weight: 400;
-  margin-top: 30px; /* Reduzi para ficar mais perto do cartão */
+  margin-top: 30px;
   height: 45px;
 }
 
-/*Swiper*/
+/* Swiper */
 .custom-card {
   width: 365px;
   height: 370px;
   border-radius: 20px;
-  background-color: #e0f5d5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   overflow: hidden;
 }
 
 ion-card-content {
-  padding: 6px 12px 12px 12px; /* diminui o padding-top para subir o texto */
+  padding: 6px 12px 12px 12px;
   color: #333;
 }
 
-ion-card-content h2, ion-card-content p {
+ion-card-content h2,
+ion-card-content p {
   margin-top: 0;
-  margin-bottom: 2px; /* ajusta o espaçamento entre os textos */
+  margin-bottom: 2px;
 }
 
-
+/* Imagem */
 ion-card img {
-  width: 345px;
+  width: 100%;
   height: 270px;
-  padding: 20px;
+  object-fit: cover;
   border-radius: 20px;
-  margin-top: 40px; /* Reduzi para ficar menos afastado */
+  margin-top: 20px;
+  padding: 0 10px;
 }
+
+/* Contador de itens */
+.counter-box {
+  margin: 40px auto 0 auto;
+  padding: 12px 18px;
+  max-width: 280px;
+  background-color: #f9000074;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold; 
+  color: #000000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+

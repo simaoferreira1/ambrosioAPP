@@ -14,19 +14,18 @@ register();
 export class Tab1Page {
   slides: Array<{ img: string; title: string; subtitle: string; bgColor: string }> = [];
 
-  // Placeholders with fixed background (#C5E1A5 for 7 days, #FFEB99 for 5 days)
   private placeholders = [
     {
       img: 'assets/macas.jpg',
       title: 'Fresh apples',
       subtitle: 'Expires in 7 days',
-      bgColor: '#C5E1A5'
+      bgColor: '#d9f3cf'
     },
     {
       img: 'assets/laranja.jpg',
       title: 'Sweet oranges',
       subtitle: 'Expires in 5 days',
-      bgColor: '#C5E1A5'
+      bgColor: '#d9f3cf'
     },
   ];
 
@@ -53,7 +52,7 @@ export class Tab1Page {
             const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
             return { f, diffDays };
           })
-          .filter(item => item.diffDays <= 7); // include expired (<0) and up to 7 days
+          .filter(item => item.diffDays <= 7); // inclui expirados
 
         if (soonToExpire.length === 0) {
           this.slides = this.placeholders;
@@ -63,6 +62,7 @@ export class Tab1Page {
         this.slides = soonToExpire.map(item => {
           const f = item.f;
           const diffDays = item.diffDays;
+
           let subtitle: string;
           if (diffDays < 0) {
             subtitle = `Expired for ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''}`;
@@ -74,17 +74,13 @@ export class Tab1Page {
             subtitle = `${diffDays} days until expiration`;
           }
 
-          // Determine background color:
           let bgColor: string;
-          if (diffDays < 0) {
-            // Expired
-            bgColor = '#FF9595';
-          } else if (diffDays <= 2) {
-            // 0,1,2 days left → yellow
-            bgColor = '#FFEB99';
+          if (diffDays <= 1) {
+            bgColor = '#FF9595'; // vermelho
+          } else if (diffDays >= 2 && diffDays <= 3) {
+            bgColor = '#FFEB99'; // amarelo
           } else {
-            // 3–7 days left → green
-            bgColor = '#C5E1A5';
+            bgColor = '#d9f3cf'; // verde
           }
 
           return {

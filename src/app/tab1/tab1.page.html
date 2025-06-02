@@ -1,7 +1,5 @@
 <ion-content class="ion-padding">
-
-
-  <!-- Swiper: will show either the soon-to-expire foods or your placeholders -->
+  <!-- Swiper com alimentos -->
   <swiper-container
     slides-per-view="1"
     space-between="10"
@@ -10,7 +8,7 @@
     loop="true"
   >
     <swiper-slide *ngFor="let item of slides">
-      <ion-card class="custom-card">
+      <ion-card class="custom-card" [ngStyle]="{ 'background-color': item.bgColor }">
         <img [src]="item.img" alt="Food Image" />
         <ion-card-content>
           <h2><strong>{{ item.title }}</strong></h2>
@@ -20,7 +18,7 @@
     </swiper-slide>
   </swiper-container>
 
-  <!-- Buttons -->
+  <!-- Botões -->
   <ion-button expand="block" fill="clear" class="botao-pilula" [routerLink]="['/listade-compras']">
     Shopping List
   </ion-button>
@@ -29,4 +27,8 @@
     Recipes with available food
   </ion-button>
 
-</ion-content>
+  <!-- Contador de alimentos próximos da validade -->
+ <div class="counter-box">
+ <strong> You have {{ slides.length }} item{{ slides.length === 1 ? '' : 's' }} near expiration!</strong>
+</div>
+
