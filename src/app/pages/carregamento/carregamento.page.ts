@@ -59,7 +59,7 @@ export class CarregamentoPage implements OnInit {
         this.recipe = data;
         this.router.navigate(['/receita'], { state: { recipe: this.recipe } });
       } catch (error) {
-        console.error('Erro ao buscar receita:', error);
+        console.error('Error fetching recipe:', error);
         // Even on error, navigate to /receita so the page can handle absence of data
         this.router.navigate(['/receita']);
       }

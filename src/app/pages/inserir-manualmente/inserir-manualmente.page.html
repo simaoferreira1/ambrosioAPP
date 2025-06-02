@@ -3,10 +3,10 @@
     <ion-buttons slot="start">
       <ion-button class="btn-voltar" routerLink="/adicionar-alimento">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-        Voltar
+        Back
       </ion-button>
     </ion-buttons>
-    <ion-title>Adicionar Alimento</ion-title>
+    <ion-title>Add Food</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,31 +15,31 @@
     <ion-list lines="full" class="ion-padding">
       <!-- Produto -->
       <ion-item>
-        <ion-label position="stacked">Produto</ion-label>
+        <ion-label position="stacked">Product</ion-label>
         <ion-input
           type="text"
           name="produto"
           [(ngModel)]="produto"
           required
-          placeholder="Ex: Maçã"
+          placeholder="e.g., Apple"
         ></ion-input>
       </ion-item>
 
       <!-- Quantidade -->
       <ion-item>
-        <ion-label position="stacked">Quantidade</ion-label>
+        <ion-label position="stacked">Quantity</ion-label>
         <ion-input
           type="number"
           name="quantidade"
           [(ngModel)]="quantidade"
           required
-          placeholder="Ex: 3"
+          placeholder="e.g., 3"
         ></ion-input>
       </ion-item>
 
       <!-- Data de Compra -->
       <ion-item>
-        <ion-label position="stacked">Data de compra</ion-label>
+        <ion-label position="stacked">Purchase Date</ion-label>
         <ion-button
           fill="clear"
           (click)="abrirCalendarioCompra()"
@@ -67,7 +67,7 @@
 
       <!-- Data de Validade -->
       <ion-item>
-        <ion-label position="stacked">Data de validade</ion-label>
+        <ion-label position="stacked">Expiration Date</ion-label>
         <ion-button
           fill="clear"
           (click)="abrirCalendarioValidade()"
@@ -100,7 +100,7 @@
         type="submit"
         class="ion-margin-top"
       >
-        Guardar
+        Save
       </ion-button>
     </ion-list>
   </form>

@@ -3,23 +3,23 @@
     <ion-buttons slot="start">
       <ion-button class="botao-verde-claro" [routerLink]="['/tabs/tab1']">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-        Voltar
+        Back
       </ion-button>
     </ion-buttons>
 
-    <ion-title class="titulo-lista">Lista de compras</ion-title>
+    <ion-title class="titulo-lista">Shopping List</ion-title>
 
     <ion-buttons slot="end">
       <ion-button class="botao-verde-claro-azul">
         <ion-icon slot="start" name="share-outline"></ion-icon>
-        Partilhar
+        Share
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar placeholder="Pesquisar"></ion-searchbar>
+  <ion-searchbar placeholder="Search"></ion-searchbar>
 
   <ion-list>
     <ion-item *ngFor="let item of listaCompras">

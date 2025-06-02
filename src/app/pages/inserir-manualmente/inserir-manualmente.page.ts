@@ -43,7 +43,7 @@ export class InserirManualmentePage implements OnInit {
       console.log('Current user ID:', this.currentUserId);
     } else {
       // Not logged in → redirect to login
-      console.warn('Usuário não autenticado. Redirecionando para login...');
+      console.warn('User not authenticated. Redirecting to login...');
       this.router.navigateByUrl('/login');
     }
   }
@@ -58,7 +58,7 @@ export class InserirManualmentePage implements OnInit {
 
   private async presentLoading() {
     this.loadingEl = await this.loadingCtrl.create({
-      message: 'Enviando...',
+      message: 'Submitting...',
       spinner: 'crescent',
       backdropDismiss: false
     });
@@ -82,7 +82,7 @@ export class InserirManualmentePage implements OnInit {
       this.currentUserId === 0
     ) {
       const toast = await this.toastController.create({
-        message: 'Por favor, preencha todos os campos corretamente.',
+        message: 'Please fill in all fields correctly.',
         duration: 2000,
         color: 'warning'
       });
@@ -105,15 +105,15 @@ export class InserirManualmentePage implements OnInit {
       userId: this.currentUserId
     };
 
-    console.log('🔧 Payload para criar Food:', payload);
+    console.log('🔧 Payload to create Food:', payload);
 
     // 3) Show loading spinner
     await this.presentLoading();
 
-    // 4) Call the API (novo FoodService já salva local imediatamente)
+    // 4) Call the API (new FoodService already saves locally)
     this.foodService.addFood(payload).subscribe(
       async (createdFood: Food) => {
-        console.log('Food criado no servidor:', createdFood);
+        console.log('Food created on the server:', createdFood);
 
         // 5) Dismiss loading spinner
         await this.dismissLoading();
@@ -122,7 +122,7 @@ export class InserirManualmentePage implements OnInit {
         this.router.navigateByUrl('/tabs/tab2');
       },
       async (err) => {
-        console.error('Erro ao criar food no servidor:', err);
+        console.error('Error creating food on the server:', err);
 
         // 7) Dismiss loading spinner
         await this.dismissLoading();
@@ -130,8 +130,8 @@ export class InserirManualmentePage implements OnInit {
         // 8) Show error toast
         const msg =
           err.error && err.error.error
-            ? `Falha: ${err.error.error}`
-            : 'Falha ao guardar alimento. Veja o console para detalhes.';
+            ? `Failed: ${err.error.error}`
+            : 'Failed to save food. See console for details.';
         const toast = await this.toastController.create({
           message: msg,
           duration: 3000,

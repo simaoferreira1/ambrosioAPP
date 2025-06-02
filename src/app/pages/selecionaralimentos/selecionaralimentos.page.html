@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-button class="botao-verde-claro" shape="round" [routerLink]="['/tabs/tab1']">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-        Voltar
+        Back
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button class="botao-verde-claro" shape="round" (click)="irParaCarregamento()">
-        Seguinte
+        Next
         <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
   <!-- Campo de instrução -->
   <ion-item lines="none" class="campo-instrucao">
     <ion-input
-      placeholder="Selecione os alimentos que deseja utilizar"
+      placeholder="Select the foods you want to use"
       readonly
     ></ion-input>
   </ion-item>

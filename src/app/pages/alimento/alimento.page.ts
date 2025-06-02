@@ -52,15 +52,15 @@ export class AlimentoPage implements OnInit {
 
   async confirmarRemocao() {
     const alert = await this.alertController.create({
-      header: 'Tem a certeza que quer remover este produto?',
+      header: 'Are you sure you want to delete the food item?',
       buttons: [
         {
-          text: 'Não',
+          text: 'No',
           role: 'cancel',
           cssClass: 'btn-nao'
         },
         {
-          text: 'Sim',
+          text: 'Yes',
           handler: () => this.removerAlimento(),
           cssClass: 'btn-sim'
         }
@@ -73,9 +73,9 @@ export class AlimentoPage implements OnInit {
 
   async removerAlimento() {
     if (!this.alimento.id) {
-      console.error('ID inválido ao tentar remover.');
+      console.error('Invalid ID when trying to remove.');
       const toast = await this.toastController.create({
-        message: 'ID inválido. Não foi possível remover.',
+        message: 'Invalid ID. Removal failed.',
         duration: 2000,
         color: 'danger'
       });
@@ -85,9 +85,9 @@ export class AlimentoPage implements OnInit {
 
     this.foodService.deleteFood(this.alimento.id).subscribe({
       next: async () => {
-        console.log('✅ Alimento removido no servidor, ID:', this.alimento.id);
+        console.log('✅ Food item removed on the server, ID:', this.alimento.id);
         const toast = await this.toastController.create({
-          message: 'Alimento removido com sucesso!',
+          message: 'Food item removed with sucess!',
           duration: 2000,
           color: 'success'
         });
@@ -97,9 +97,9 @@ export class AlimentoPage implements OnInit {
         this.router.navigateByUrl('/tabs/tab2');
       },
       error: async err => {
-        console.error('❌ Erro ao remover alimento:', err);
+        console.error('❌ Error removing food item:', err);
         const toast = await this.toastController.create({
-          message: 'Falha ao remover produto. Tente novamente.',
+          message: 'Failed to remove product. Please try again',
           duration: 3000,
           color: 'danger'
         });

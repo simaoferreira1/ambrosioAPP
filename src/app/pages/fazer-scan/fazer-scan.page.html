@@ -5,47 +5,47 @@
     <ion-buttons slot="start">
       <ion-button class="btn-voltar" routerLink="/adicionar-alimento">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-        Voltar
+        Back
       </ion-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
       <ion-button class="btn-adicionar" (click)="adicionarProduto()">
-        Adicionar
+        Add
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="fazer-scan-content">
-  <!-- Imagem do produto e overlay para iniciar scan -->
+  <!-- Product image and scan overlay -->
   <div class="imagem-container" (click)="iniciarScan()">
-    <img [src]="imagemProduto" alt="Produto" />
+    <img [src]="imagemProduto" alt="Product" />
     <div class="scanner-overlay">
       <ion-icon name="scan-outline"></ion-icon>
     </div>
   </div>
 
-  <!-- Campos preenchidos após scan, editáveis pelo usuário -->
+  <!-- Fields filled after scan, editable by user -->
   <div class="detalhes-container">
     <ion-label class="campo">
-      <p class="campo-label">Produto</p>
+      <p class="campo-label">Product</p>
       <p class="campo-valor">{{ produto }}</p>
     </ion-label>
 
     <ion-label class="campo">
-      <p class="campo-label">Quantidade</p>
-      <ion-input [(ngModel)]="quantidade" placeholder="Ex: 330ml"></ion-input>
+      <p class="campo-label">Quantity</p>
+      <ion-input [(ngModel)]="quantidade" placeholder="e.g. 330ml"></ion-input>
     </ion-label>
 
     <ion-label class="campo">
-      <p class="campo-label">Data de compra</p>
-      <ion-input [(ngModel)]="dataCompra" placeholder="DD-MM-AAAA"></ion-input>
+      <p class="campo-label">Purchase date</p>
+      <ion-input [(ngModel)]="dataCompra" placeholder="DD-MM-YYYY"></ion-input>
     </ion-label>
 
     <ion-label class="campo">
-      <p class="campo-label">Data de validade</p>
-      <ion-input [(ngModel)]="dataValidade" placeholder="DD-MM-AAAA"></ion-input>
+      <p class="campo-label">Expiration date</p>
+      <ion-input [(ngModel)]="dataValidade" placeholder="DD-MM-YYYY"></ion-input>
     </ion-label>
   </div>
 </ion-content>

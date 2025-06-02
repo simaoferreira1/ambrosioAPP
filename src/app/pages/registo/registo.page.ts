@@ -34,7 +34,7 @@ export class RegistoPage implements OnInit {
     this.submitted = true;
     if (this.registerForm.invalid) {
       const t = await this.toast.create({
-        message: 'Corrija os erros antes de continuar.',
+        message: 'Please correct the errors before continuing.',
         duration: 2000,
         color: 'danger'
       });
@@ -46,7 +46,7 @@ export class RegistoPage implements OnInit {
       // ← call the API
       const user: User = await this.auth.register(name, email, password);
       await this.toast.create({
-        message: `Conta criada para ${user.name}!`,
+        message: `Account created for ${user.name}!`,
         duration: 1500,
         color: 'success'
       }).then(toast => toast.present());
@@ -55,7 +55,7 @@ export class RegistoPage implements OnInit {
       this.router.navigateByUrl('/login', { replaceUrl: true });
     } catch (err: any) {
       await this.toast.create({
-        message: err.message || 'Erro ao registar',
+        message: err.message || 'Error signing up',
         duration: 2000,
         color: 'danger'
       }).then(toast => toast.present());

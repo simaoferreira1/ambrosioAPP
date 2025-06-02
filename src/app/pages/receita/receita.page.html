@@ -10,7 +10,7 @@
         [routerLink]="['/selecionaralimentos']"
       >
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
-        Voltar
+        Back
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -24,14 +24,14 @@
   <div *ngIf="photo" style="text-align:center; margin: 15px 0;">
     <img
       [src]="photo"
-      alt="Imagem da receita"
+      alt="Recipe image"
       style="width: 100%; border-radius: 10px;"
     />
   </div>
 
   <!-- Ingredients list -->
   <div *ngIf="ingredients && ingredients.length">
-    <p><strong>Ingredientes:</strong></p>
+    <p><strong>Ingredients:</strong></p>
     <ul>
       <li *ngFor="let item of ingredients">{{ item }}</li>
     </ul>
@@ -39,12 +39,12 @@
 
   <!-- Instructions -->
   <div *ngIf="instructions">
-    <p><strong>Modo de Preparo:</strong></p>
+    <p><strong>Preparation:</strong></p>
     <p [innerHTML]="instructions"></p>
   </div>
 
   <!-- Fallback message if no ingredients and no instructions -->
   <div *ngIf="!ingredients.length && !instructions">
-    <p>Desculpe, não há receita para exibir.</p>
+    <p>Sorry, there is no recipe to display.</p>
   </div>
 </ion-content>

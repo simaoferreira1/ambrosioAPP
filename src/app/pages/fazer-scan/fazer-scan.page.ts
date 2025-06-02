@@ -32,42 +32,35 @@ export class FazerScanPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    // Nothing needed here for now
-  }
+  ngOnInit() {}
 
   async iniciarScan() {
     try {
-      // 1) Escanear código
       const scanResult: BarcodeScanResult = await this.barcodeScanner.scan();
 
       if (!scanResult.text || scanResult.cancelled) {
         return;
       }
 
-      // 2) Extrair o valor puro do código de barras (retira “format:…” se houver)
       const raw = scanResult.text;
       const parts = raw.split(':');
       const barcode = parts.length > 1 ? parts[1] : parts[0];
 
-      // 3) Buscar no endpoint /api/v1/products?barcode=<valor>
       const url = `${this.apiBase}/products?barcode=${encodeURIComponent(barcode)}`;
       this.http.get<{ name: string; imageUrl: string }>(url).subscribe({
         next: data => {
-          // 4) Preencher campos com nome e imagem
           this.produto = data.name;
           this.imagemProduto = data.imageUrl || 'assets/placeholder.png';
-          // Campos manuais ficam em branco para o usuário preencher
           this.quantidade = '';
           this.dataCompra = '';
           this.dataValidade = '';
         },
         error: async err => {
-          console.error('Erro ao buscar produto:', err);
-          this.produto = 'Produto não encontrado';
+          console.error('Error fetching product:', err);
+          this.produto = 'Product not found';
           this.imagemProduto = 'assets/placeholder.png';
           const toast = await this.toastController.create({
-            message: 'Produto não encontrado.',
+            message: 'Product not found.',
             duration: 2000,
             color: 'warning'
           });
@@ -75,9 +68,9 @@ export class FazerScanPage implements OnInit {
         }
       });
     } catch (err) {
-      console.error('Erro no scan:', err);
+      console.error('Scan error:', err);
       const toast = await this.toastController.create({
-        message: 'Falha ao escanear código.',
+        message: 'Failed to scan barcode.',
         duration: 2000,
         color: 'danger'
       });
@@ -101,17 +94,12 @@ export class FazerScanPage implements OnInit {
     }
   }
 
-  /**
-   * Ao tocar em "Adicionar", salva no backend atrelado ao usuário atual,
-   * e depois (internamente) em LocalStorage via FoodService.addFood().
-   */
   async adicionarProduto() {
-    // 1) Obter usuário logado
     const user: User | null = await this.authService.getCurrentUser();
     if (!user) {
-      console.error('Nenhum usuário autenticado.');
+      console.error('No authenticated user.');
       const toast = await this.toastController.create({
-        message: 'Usuário não autenticado.',
+        message: 'User not authenticated.',
         duration: 2000,
         color: 'danger'
       });
@@ -119,15 +107,9 @@ export class FazerScanPage implements OnInit {
       return;
     }
 
-    // 2) Validar campos obrigatórios
-    if (
-      !this.produto ||
-      !this.quantidade ||
-      !this.dataCompra ||
-      !this.dataValidade
-    ) {
+    if (!this.produto || !this.quantidade || !this.dataCompra || !this.dataValidade) {
       const toast = await this.toastController.create({
-        message: 'Por favor, preencha todos os campos antes de adicionar.',
+        message: 'Please fill in all fields before adding.',
         duration: 2000,
         color: 'warning'
       });
@@ -135,8 +117,6 @@ export class FazerScanPage implements OnInit {
       return;
     }
 
-    // 3) Montar payload para a API
-    // Supondo que dataCompra / dataValidade já estejam no formato ISO (YYYY-MM-DD).
     const payload = {
       name: this.produto,
       quantity: parseFloat(
@@ -147,36 +127,30 @@ export class FazerScanPage implements OnInit {
       userId: user.id
     };
 
-    console.log('📤 Payload para addFood:', payload);
+    console.log('📤 Payload for addFood:', payload);
 
-    // 4) Mostrar loading enquanto a requisição via FoodService ocorre
-    await this.presentLoading('Adicionando produto...');
+    await this.presentLoading('Adding product...');
 
     this.foodService.addFood(payload).subscribe(
       async (created: Food) => {
-        console.log('Food criado no servidor:', created);
-
-        // 5) Dismiss loading e exibir toast de sucesso
+        console.log('Food created on server:', created);
         await this.dismissLoading();
         const toast = await this.toastController.create({
-          message: 'Produto adicionado com sucesso!',
+          message: 'Product successfully added!',
           duration: 2000,
           color: 'success'
         });
         await toast.present();
 
-        // 6) Navegar de volta para a lista (Tab 2)
         this.router.navigateByUrl('/tabs/tab2');
       },
       async err => {
-        console.error('Erro ao criar food no servidor:', err);
-
-        // 7) Dismiss loading e exibir toast de erro
+        console.error('Error creating food on server:', err);
         await this.dismissLoading();
         const msg =
           err.error && err.error.error
-            ? `Falha: ${err.error.error}`
-            : 'Falha ao adicionar produto. Veja o console para detalhes.';
+            ? `Error: ${err.error.error}`
+            : 'Failed to add product. Check console for details.';
         const toast = await this.toastController.create({
           message: msg,
           duration: 3000,

@@ -1,12 +1,12 @@
 <ion-content class="ion-padding">
 
-  <!-- Cabeçalho do botão adicionar -->
+  <!-- Header of the add button -->
   <ion-item lines="none" class="add-header-item" routerLink="/adicionar-alimento" detail="false">
-    <ion-label><strong>Adicionar alimento</strong></ion-label>
+    <ion-label><strong>Add food</strong></ion-label>
     <ion-icon name="add-outline" slot="end" class="icon-add"></ion-icon>
   </ion-item>
 
-  <!-- Lista de alimentos -->
+  <!-- Food list -->
   <ion-list lines="full">
     <ion-item
       button
@@ -21,7 +21,7 @@
         dataValidade: alimento.dataValidade
       }"
     >
-      <img slot="start" [src]="alimento.imagem" class="alimento-img" />
+      <img slot="start" [src]="alimento.imagem"  class="alimento-img" />
       <ion-label>{{ alimento.nome }}</ion-label>
     </ion-item>
   </ion-list>

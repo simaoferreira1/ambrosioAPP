@@ -40,7 +40,7 @@ export class ReceitaPage implements OnInit {
       this.instructions = state.recipe.instructions;
     } else {
       // No recipe passed—navigate back or set defaults
-      this.name = 'Receita não encontrada';
+      this.name = 'Recipe not found';
       this.photo = '';
       this.ingredients = [];
       this.instructions = '';
