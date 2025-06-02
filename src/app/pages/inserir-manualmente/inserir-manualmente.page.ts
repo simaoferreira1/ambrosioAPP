@@ -2,9 +2,13 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FoodService, Food } from '../../services/food.service';
-import { Storage } from '@ionic/storage-angular';
-import { Router } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import {
+  LoadingController,
+  ToastController
+} from '@ionic/angular';
+
 @Component({
   selector: 'app-inserir-manualmente',
   templateUrl: './inserir-manualmente.page.html',
@@ -21,11 +25,14 @@ export class InserirManualmentePage implements OnInit {
   mostrarCalendarioValidade = false;
 
   private currentUserId: number = 0;
+  private loadingEl: HTMLIonLoadingElement | null = null;
 
   constructor(
     private authService: AuthService,
     private foodService: FoodService,
-    private router: Router
+    private router: Router,
+    private loadingCtrl: LoadingController,
+    private toastController: ToastController
   ) {}
 
   async ngOnInit() {
@@ -49,8 +56,24 @@ export class InserirManualmentePage implements OnInit {
     this.mostrarCalendarioValidade = true;
   }
 
+  private async presentLoading() {
+    this.loadingEl = await this.loadingCtrl.create({
+      message: 'Enviando...',
+      spinner: 'crescent',
+      backdropDismiss: false
+    });
+    await this.loadingEl.present();
+  }
+
+  private async dismissLoading() {
+    if (this.loadingEl) {
+      await this.loadingEl.dismiss();
+      this.loadingEl = null;
+    }
+  }
+
   async guardarAlimento() {
-    // 1) Validate the form fields
+    // 1) Validate form fields
     if (
       !this.produto ||
       this.quantidade === null ||
@@ -58,11 +81,16 @@ export class InserirManualmentePage implements OnInit {
       !this.dataValidade ||
       this.currentUserId === 0
     ) {
-      alert('Por favor, preencha todos os campos corretamente.');
+      const toast = await this.toastController.create({
+        message: 'Por favor, preencha todos os campos corretamente.',
+        duration: 2000,
+        color: 'warning'
+      });
+      await toast.present();
       return;
     }
 
-    // 2) Build the payload for the API (omit barcode)
+    // 2) Build payload for API
     const payload: {
       name: string;
       quantity: number;
@@ -79,35 +107,40 @@ export class InserirManualmentePage implements OnInit {
 
     console.log('🔧 Payload para criar Food:', payload);
 
-    // 3) Call the API
-    this.foodService.addFood(payload as any).subscribe(
+    // 3) Show loading spinner
+    await this.presentLoading();
+
+    // 4) Call the API (novo FoodService já salva local imediatamente)
+    this.foodService.addFood(payload).subscribe(
       async (createdFood: Food) => {
-        console.log(' Food criado no servidor:', createdFood);
+        console.log('Food criado no servidor:', createdFood);
 
-        // 4) Save it locally under "localFoods_user_<userId>"
-        try {
-          await this.foodService.addLocalFood(this.currentUserId, createdFood);
-          console.log(' Food salvo localmente:', createdFood);
-        } catch (storageErr) {
-          console.error(' Erro ao salvar localmente:', storageErr);
-        }
+        // 5) Dismiss loading spinner
+        await this.dismissLoading();
 
-        // 5) Clear form
-        this.produto = '';
-        this.quantidade = null;
-        this.dataCompra = '';
-        this.dataValidade = '';
-
-        alert('Alimento guardado com sucesso!');
+        // 6) Navigate directly to Tab 2
+        this.router.navigateByUrl('/tabs/tab2');
       },
-      (err) => {
+      async (err) => {
         console.error('Erro ao criar food no servidor:', err);
-        // If backend returned {error:"…"}, show it
-        if (err.error && err.error.error) {
-          alert(`Falha: ${err.error.error}`);
-        } else {
-          alert('Falha ao guardar alimento. Veja o console para detalhes.');
-        }
+
+        // 7) Dismiss loading spinner
+        await this.dismissLoading();
+
+        // 8) Show error toast
+        const msg =
+          err.error && err.error.error
+            ? `Falha: ${err.error.error}`
+            : 'Falha ao guardar alimento. Veja o console para detalhes.';
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: 3000,
+          color: 'danger'
+        });
+        await toast.present();
+
+        // 9) Navigate to Tab 2 anyway so user sees the (local) list
+        this.router.navigateByUrl('/tabs/tab2');
       }
     );
   }

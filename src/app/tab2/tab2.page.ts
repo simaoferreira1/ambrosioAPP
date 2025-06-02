@@ -1,8 +1,10 @@
+// src/app/pages/tab2/tab2.page.ts
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoodService, Food } from '../services/food.service';
 import { AuthService, User } from '../services/auth.service';
-import { ViewWillEnter } from '@ionic/angular';
+import { ViewWillEnter, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -23,12 +25,10 @@ export class Tab2Page implements ViewWillEnter {
   constructor(
     private authService: AuthService,
     private foodService: FoodService,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) {}
 
-  /**
-   * Helper: format ISO date → "DD-MM-YYYY"
-   */
   private formatDate(iso: string): string {
     const d = new Date(iso);
     const day = String(d.getDate()).padStart(2, '0');
@@ -37,32 +37,38 @@ export class Tab2Page implements ViewWillEnter {
     return `${day}-${month}-${year}`;
   }
 
-  /**
-   * Called each time this page is about to become active.
-   * We reload the foods here so that any additions or deletions
-   * made elsewhere are reflected immediately.
-   */
   async ionViewWillEnter(): Promise<void> {
-    await this.loadFoods();
+    // 1) Recarrega a lista local imediatamente:
+    await this.loadLocalFoods();
+
+    // 2) Então, chama o backend para atualizar (se possível):
+    await this.loadFoodsFromApi();
   }
 
-  /**
-   * Fetches the current user's foods from the API
-   * and maps them into the `alimentos` array.
-   */
-  private async loadFoods(): Promise<void> {
-    // 1) Get the logged-in user
+  private async loadLocalFoods(): Promise<void> {
     const user: User | null = await this.authService.getCurrentUser();
     if (!user) {
-      // If no user is stored, redirect to login
       this.router.navigateByUrl('/login');
       return;
     }
+    const localFoods: Food[] = await this.foodService.getLocalFoods(user.id);
+    this.alimentos = localFoods.map(f => ({
+      id: f.id,
+      nome: f.name,
+      imagem: f.image?.url || 'assets/placeholder.png',
+      quantidade: f.quantity.toString(),
+      dataCompra: this.formatDate(f.buyDate),
+      dataValidade: this.formatDate(f.expirationDate)
+    }));
+  }
 
-    // 2) Fetch foods for this user
+  private async loadFoodsFromApi(): Promise<void> {
+    const user: User | null = await this.authService.getCurrentUser();
+    if (!user) {
+      return;
+    }
     this.foodService.getFoods(user.id).subscribe(
       (foods: Food[]) => {
-        // 3) Map each Food to the local structure
         this.alimentos = foods.map(f => ({
           id: f.id,
           nome: f.name,
@@ -71,11 +77,30 @@ export class Tab2Page implements ViewWillEnter {
           dataCompra: this.formatDate(f.buyDate),
           dataValidade: this.formatDate(f.expirationDate)
         }));
+        // Se quiser manter o local igual ao API, re‐salvar tudo:
+        this.overwriteLocalFoods(user.id, foods);
       },
-      err => {
+      async err => {
         console.error('Erro ao obter alimentos do servidor:', err);
-        // Optionally show an alert here
+        const toast = await this.toastController.create({
+          message: 'Falha ao carregar do servidor; usando dados locais.',
+          duration: 3000,
+          color: 'warning',
+          position: 'bottom'
+        });
+        await toast.present();
       }
     );
+  }
+
+  private async overwriteLocalFoods(userId: number, foods: Food[]) {
+    // Substitui a lista inteira em storage local pelo resultado do backend
+    // (para manter sincronizado)
+    if (foods && foods.length >= 0) {
+      for (const f of foods) {
+        // Já está tratado em replaceLocalFood()
+        await this.foodService['replaceLocalFood'](userId, f);
+      }
+    }
   }
 }
