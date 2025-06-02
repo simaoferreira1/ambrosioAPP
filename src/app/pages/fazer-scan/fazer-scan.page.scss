@@ -11,14 +11,56 @@
     }
 
     .btn-voltar {
-      background-color: #d4f5d3;
-      color: black;
-    }
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black !important;
+  --border-radius: 20px !important;
+
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
     .btn-adicionar {
-      background-color: #d4f5d3;
-      color: black;
-    }
+  --background: #d9f3cf !important;
+  --background-hover: #d9f3cf !important;
+  --background-activated: #d9f3cf !important;
+  --background-focused: #d9f3cf !important;
+
+  --color: black !important;
+  --border-radius:20px !important;
+
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+
+  font-weight: bold;
+  font-size: 16px;
+
+  height: 44px;
+  width: 120px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
   }
 
   .fazer-scan-content {

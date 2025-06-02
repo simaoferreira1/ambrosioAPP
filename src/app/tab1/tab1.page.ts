@@ -18,14 +18,14 @@ export class Tab1Page {
   private placeholders = [
     {
       img: 'assets/macas.jpg',
-      title: 'Maçãs frescas',
-      subtitle: 'Expira em 7 dias',
+      title: 'Fresh apples',
+      subtitle: 'Expires in 7 days',
       bgColor: '#C5E1A5'
     },
     {
       img: 'assets/laranja.jpg',
-      title: 'Laranjas doces',
-      subtitle: 'Expira em 5 dias',
+      title: 'Sweet oranges',
+      subtitle: 'Expires in 5 days',
       bgColor: '#C5E1A5'
     },
   ];
@@ -65,13 +65,13 @@ export class Tab1Page {
           const diffDays = item.diffDays;
           let subtitle: string;
           if (diffDays < 0) {
-            subtitle = `Expirado há ${Math.abs(diffDays)} dia${Math.abs(diffDays) !== 1 ? 's' : ''}`;
+            subtitle = `Expired for ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''}`;
           } else if (diffDays === 0) {
-            subtitle = 'Expira hoje';
+            subtitle = 'Expire today';
           } else if (diffDays === 1) {
-            subtitle = '1 dia até expirar';
+            subtitle = '1 day until expire';
           } else {
-            subtitle = `${diffDays} dias até expirar`;
+            subtitle = `${diffDays} days until expiration`;
           }
 
           // Determine background color:
@@ -96,7 +96,7 @@ export class Tab1Page {
         });
       },
       error => {
-        console.error('Erro ao obter alimentos para slides:', error);
+        console.error('Error fetching foods for slides:', error);
         this.slides = this.placeholders;
       }
     );
