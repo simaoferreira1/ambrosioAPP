@@ -89,7 +89,7 @@ export class AlimentoPage implements OnInit {
         const toast = await this.toastController.create({
           message: 'Food item removed with sucess!',
           duration: 2000,
-          color: 'success'
+          color: 'warning'
         });
         await toast.present();
 

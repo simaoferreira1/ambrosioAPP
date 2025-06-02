@@ -2,116 +2,57 @@
   ion-toolbar {
     --background: white;
     --color: black;
-
-    ion-button {
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: 20px;
-      padding: 6px 14px;
-    }
-
-    .btn-voltar {
-  --background: #d9f3cf !important;
-  --background-hover: #d9f3cf !important;
-  --background-activated: #d9f3cf !important;
-  --background-focused: #d9f3cf !important;
-
-  --color: black !important;
-  --border-radius: 20px !important;
-
-  --padding-start: 12px;
-  --padding-end: 12px;
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-
-  font-weight: bold;
-  font-size: 16px;
-
-  height: 44px;
-  width: 120px;
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-    .btn-adicionar {
-  --background: #d9f3cf !important;
-  --background-hover: #d9f3cf !important;
-  --background-activated: #d9f3cf !important;
-  --background-focused: #d9f3cf !important;
-
-  --color: black !important;
-  --border-radius:20px !important;
-
-  --padding-start: 12px;
-  --padding-end: 12px;
-  --padding-top: 0px;
-  --padding-bottom: 0px;
-
-  font-weight: bold;
-  font-size: 16px;
-
-  height: 44px;
-  width: 120px;
-
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
   }
 
-  .fazer-scan-content {
-    --background: #ffffff;
+  .btn-voltar {
+    --background: #d9f3cf !important;
+    --background-hover: #d9f3cf !important;
+    --background-activated: #d9f3cf !important;
+    --background-focused: #d9f3cf !important;
 
-    .imagem-container {
-  position: relative;
-  width: 100%;
-  height: auto;
+    --color: black !important;
+    --border-radius: 20px !important;
 
-  img {
-    width: 100%;
-    display: block;
-    border-bottom: 1px solid #ddd;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    height: 44px;
+    width: 120px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
-  .scanner-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 8px;
-    border-radius: 12px;
+  .btn-adicionar {
+    --background: #d9f3cf !important;
+    --background-hover: #d9f3cf !important;
+    --background-activated: #d9f3cf !important;
+    --background-focused: #d9f3cf !important;
 
-    ion-icon {
-      font-size: 48px;
-      color: black;
-    }
-  }
-}
+    --color: black !important;
+    --border-radius: 20px !important;
 
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 0px;
+    --padding-bottom: 0px;
 
-    .detalhes-container {
-      background-color: #fff;
-      padding: 20px;
+    font-weight: bold;
+    font-size: 16px;
 
-      .campo {
-        margin-bottom: 16px;
+    height: 44px;
+    width: 120px;
 
-        .campo-label {
-          font-weight: bold;
-          color: #333;
-          margin: 0;
-        }
-
-        .campo-valor {
-          color: #666;
-          margin: 4px 0 0;
-        }
-      }
-    }
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 }

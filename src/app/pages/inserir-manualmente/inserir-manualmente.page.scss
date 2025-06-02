@@ -27,10 +27,11 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-    
   }
+
+
+
+}
 
   ion-content {
     --background: #ffffff;
@@ -55,4 +56,12 @@
       }
     }
   }
+
+
+  .save-button {
+    --background: #84f358;
+    --color: white; 
+    --border-radius: 12px; 
+}
+
 }
