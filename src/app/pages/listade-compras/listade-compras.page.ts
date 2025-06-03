@@ -10,7 +10,6 @@ import { ToastController } from '@ionic/angular';
 })
 export class ListadeComprasPage implements OnInit {
   shoppingList: string[] = [
-    'Rice',
     'Tomatoes',
     'Lettuce',
     'Turkey steak',

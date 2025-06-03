@@ -20,8 +20,8 @@
           <ion-text
             color="danger"
             *ngIf="
-              (f['name'].invalid && (f['name'].dirty || f['name'].touched))
-              || (submitted && f['name'].invalid)
+              (f['name'].invalid && (f['name'].dirty || f['name'].touched)) ||
+              (submitted && f['name'].invalid)
             "
           >
             <small *ngIf="f['name'].errors?.['required']">
@@ -47,8 +47,8 @@
           <ion-text
             color="danger"
             *ngIf="
-              (f['email'].invalid && (f['email'].dirty || f['email'].touched))
-              || (submitted && f['email'].invalid)
+              (f['email'].invalid && (f['email'].dirty || f['email'].touched)) ||
+              (submitted && f['email'].invalid)
             "
           >
             <small *ngIf="f['email'].errors?.['required']">
@@ -74,8 +74,8 @@
           <ion-text
             color="danger"
             *ngIf="
-              (f['password'].invalid && (f['password'].dirty || f['password'].touched))
-              || (submitted && f['password'].invalid)
+              (f['password'].invalid && (f['password'].dirty || f['password'].touched)) ||
+              (submitted && f['password'].invalid)
             "
           >
             <small *ngIf="f['password'].errors?.['required']">
@@ -93,10 +93,9 @@
         <ion-col class="ion-text-center">
           <ion-button
             expand="block"
-            color="success"
             shape="round"
             type="submit"
-            class="ion-margin"
+            class="ion-margin signup-button"
             [disabled]="registerForm.invalid && submitted"
           >
             Sign Up
