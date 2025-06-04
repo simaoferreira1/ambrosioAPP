@@ -8,6 +8,10 @@ const config: CapacitorConfig = {
     ScreenOrientation: {
       locked: 'portrait'
     }
+  },
+  server:{
+    cleartext: true,
+    androidScheme: 'http',
   }
 };
 
