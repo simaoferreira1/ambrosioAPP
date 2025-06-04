@@ -23,7 +23,11 @@
     "@angular/router": "^19.0.0",
     "@awesome-cordova-plugins/barcode-scanner": "^6.16.0",
     "@awesome-cordova-plugins/http": "^6.16.0",
+<<<<<<< HEAD
     "@capacitor/android": "7.2.0",
+=======
+    "@capacitor/android": "^7.2.0",
+>>>>>>> f0f11eb5adacd5bd10db83b728d2df3a22740970
     "@capacitor/app": "7.0.1",
     "@capacitor/core": "7.2.0",
     "@capacitor/haptics": "7.0.1",
