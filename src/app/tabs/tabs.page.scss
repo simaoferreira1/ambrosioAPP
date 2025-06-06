@@ -1,16 +1,24 @@
-.custom-tab-bar {
-  background-color: #d9f3cf !important; // força verde pastel
-  border-radius: 30px 30px 0 0;
-  margin: 0 8px 8px 8px;
-  height: 70px;
-  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.05);
-  padding-bottom: env(safe-area-inset-bottom); // iOS safe area
-  overflow: hidden;
+ion-tabs {
+  --background: #d9f3cf !important;
 }
 
+.custom-tab-bar {
+  background-color: #d9f3cf !important;
+  margin: 0 8px 8px 8px; 
+  height: 70px;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-radius: 20px; 
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border-top: none;
+}
+
+
 ion-tab-button {
+  --background: transparent !important;         
+  --color: #444;
   --color-selected: #000;
-  --color: #666;
+  background-color: #d9f3cf !important;        
   font-size: 12px;
 
   ion-icon {

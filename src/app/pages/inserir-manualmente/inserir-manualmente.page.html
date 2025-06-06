@@ -27,15 +27,31 @@
 
       <!-- Quantidade -->
       <ion-item>
-        <ion-label position="stacked">Quantity</ion-label>
-        <ion-input
-          type="number"
-          name="quantidade"
-          [(ngModel)]="quantidade"
-          required
-          placeholder="e.g., 3"
-        ></ion-input>
-      </ion-item>
+      <ion-label position="stacked">Quantity</ion-label>
+      <ion-input
+        type="number"
+        name="quantidade"
+        [(ngModel)]="quantidade"
+        required
+        placeholder="e.g., 3"
+      ></ion-input>
+
+      <ion-select
+        placeholder="Unit"
+        [(ngModel)]="unidade"
+        name="unidade"
+        interface="popover"
+        slot="end"
+      >
+        <ion-select-option value="un">units</ion-select-option>
+        <ion-select-option value="kg">kg</ion-select-option>
+        <ion-select-option value="g">g</ion-select-option>
+        <ion-select-option value="l">liters</ion-select-option>
+        <ion-select-option value="ml">ml</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
 
       <!-- Data de Compra -->
       <ion-item>

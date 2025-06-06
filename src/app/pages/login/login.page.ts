@@ -1,8 +1,8 @@
-import { Component, OnInit }   from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router }              from '@angular/router';
-import { ToastController }     from '@ionic/angular';
-import { AuthService, User }   from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { AuthService, User } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,19 +13,24 @@ import { AuthService, User }   from '../../services/auth.service';
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
+  showPassword: boolean = false; 
 
   constructor(
-    private fb:    FormBuilder,
-    private auth:  AuthService,
+    private fb: FormBuilder,
+    private auth: AuthService,
     private router: Router,
     private toast: ToastController
   ) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email:    ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   async onSubmit() {
@@ -57,6 +62,8 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // Easy getters for template
-  get f() { return this.loginForm.controls; }
+  // Getter para facilitar o acesso no HTML
+  get f() {
+    return this.loginForm.controls;
+  }
 }

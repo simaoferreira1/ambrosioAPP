@@ -7,11 +7,12 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title class="titulo-lista">Shopping List</ion-title>
+    <!-- Título removido conforme pedido -->
+    <!-- <ion-title class="titulo-lista">Shopping List</ion-title> -->
 
     <ion-buttons slot="end">
       <ion-button (click)="shareList()">
-        <ion-icon class= "share-button" slot="start" name="share-outline"></ion-icon>
+        <ion-icon class="share-button" slot="start" name="share-outline"></ion-icon>
         Share
       </ion-button>
     </ion-buttons>
@@ -19,7 +20,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- Container para searchbar + botão de adicionar -->
   <div class="searchbar-container" style="display: flex; align-items: center; padding: 8px;">
     <ion-searchbar
       placeholder="Search"
@@ -28,7 +28,7 @@
       style="flex: 1;"
     ></ion-searchbar>
 
-    <ion-button (click)="addNewItemFromSearch()" color="primary">
+    <ion-button (click)="addNewItemFromSearch()" class="botao-verde-claro">
       <ion-icon name="add-circle-outline"></ion-icon>
     </ion-button>
   </div>

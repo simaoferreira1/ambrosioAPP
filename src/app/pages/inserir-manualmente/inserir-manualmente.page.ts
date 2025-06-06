@@ -1,5 +1,3 @@
-// src/app/pages/inserir-manualmente/inserir-manualmente.page.ts
-
 import { Component, OnInit } from '@angular/core';
 import { FoodService, Food } from '../../services/food.service';
 import { AuthService, User } from '../../services/auth.service';
@@ -20,6 +18,8 @@ export class InserirManualmentePage implements OnInit {
   quantidade: number | null = null;
   dataCompra: string = '';
   dataValidade: string = '';
+  unidade: string = 'un';
+
 
   mostrarCalendarioCompra = false;
   mostrarCalendarioValidade = false;
@@ -36,13 +36,11 @@ export class InserirManualmentePage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // 1) Get current user from AuthService
     const user: User | null = await this.authService.getCurrentUser();
     if (user && user.id) {
       this.currentUserId = user.id;
       console.log('Current user ID:', this.currentUserId);
     } else {
-      // Not logged in → redirect to login
       console.warn('User not authenticated. Redirecting to login...');
       this.router.navigateByUrl('/login');
     }
@@ -73,7 +71,6 @@ export class InserirManualmentePage implements OnInit {
   }
 
   async guardarAlimento() {
-    // 1) Validate form fields
     if (
       !this.produto ||
       this.quantidade === null ||
@@ -90,7 +87,30 @@ export class InserirManualmentePage implements OnInit {
       return;
     }
 
-    // 2) Build payload for API
+    // ❌ Quantidade negativa ou zero
+    if (this.quantidade <= 0) {
+      const toast = await this.toastController.create({
+        message: 'It is not possible to add products with negative or zero quantity.',
+        duration: 2500,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
+    // ❌ Data de validade anterior à compra
+    const compra = new Date(this.dataCompra);
+    const validade = new Date(this.dataValidade);
+    if (validade < compra) {
+      const toast = await this.toastController.create({
+        message: 'Expiration date cannot be before purchase date.',
+        duration: 2500,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
     const payload: {
       name: string;
       quantity: number;
@@ -107,27 +127,17 @@ export class InserirManualmentePage implements OnInit {
 
     console.log('🔧 Payload to create Food:', payload);
 
-    // 3) Show loading spinner
     await this.presentLoading();
 
-    // 4) Call the API (new FoodService already saves locally)
     this.foodService.addFood(payload).subscribe(
       async (createdFood: Food) => {
         console.log('Food created on the server:', createdFood);
-
-        // 5) Dismiss loading spinner
         await this.dismissLoading();
-
-        // 6) Navigate directly to Tab 2
         this.router.navigateByUrl('/tabs/tab2');
       },
       async (err) => {
         console.error('Error creating food on the server:', err);
-
-        // 7) Dismiss loading spinner
         await this.dismissLoading();
-
-        // 8) Show error toast
         const msg =
           err.error && err.error.error
             ? `Failed: ${err.error.error}`
@@ -138,8 +148,6 @@ export class InserirManualmentePage implements OnInit {
           color: 'danger'
         });
         await toast.present();
-
-        // 9) Navigate to Tab 2 anyway so user sees the (local) list
         this.router.navigateByUrl('/tabs/tab2');
       }
     );

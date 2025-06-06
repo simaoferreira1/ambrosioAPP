@@ -17,6 +17,7 @@ export class AlimentoPage implements OnInit {
     nome: string;
     imagem: string;
     quantidade: string;
+    unidade: string;
     dataCompra: string;
     dataValidade: string;
   } = {
@@ -24,6 +25,7 @@ export class AlimentoPage implements OnInit {
     nome: '',
     imagem: '',
     quantidade: '',
+    unidade: '',
     dataCompra: '',
     dataValidade: ''
   };
@@ -37,13 +39,13 @@ export class AlimentoPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 1) Subscribe a queryParams para popular 'alimento'
     this.route.queryParams.subscribe(params => {
       this.alimento = {
-        id: Number(params['id'] || 0),  // Deve vir de Tab2
+        id: Number(params['id'] || 0),
         nome: params['nome'] || '',
         imagem: params['imagem'] || '',
         quantidade: params['quantidade'] || '',
+        unidade: params['unidade'] || '',
         dataCompra: params['dataCompra'] || '',
         dataValidade: params['dataValidade'] || ''
       };
@@ -87,13 +89,11 @@ export class AlimentoPage implements OnInit {
       next: async () => {
         console.log('✅ Food item removed on the server, ID:', this.alimento.id);
         const toast = await this.toastController.create({
-          message: 'Food item removed with sucess!',
+          message: 'Food item removed with success!',
           duration: 2000,
           color: 'warning'
         });
         await toast.present();
-
-        // 3) Navegar de volta para Tab 2 depois de exibir o toast
         this.router.navigateByUrl('/tabs/tab2');
       },
       error: async err => {

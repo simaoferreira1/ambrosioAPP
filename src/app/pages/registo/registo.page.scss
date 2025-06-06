@@ -8,3 +8,13 @@
   --background: #d9f3cf;
   color: black;
 }
+
+.toggle-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  font-size: 22px;
+  z-index: 10;
+  cursor: pointer;
+}

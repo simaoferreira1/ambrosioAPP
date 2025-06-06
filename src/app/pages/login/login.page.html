@@ -30,23 +30,33 @@
 
         <!-- Password Field -->
         <ion-row>
-          <ion-col>
-            <ion-input
-              label="Password"
-              label-placement="floating"
-              fill="outline"
-              formControlName="password"
-              type="password"
-            ></ion-input>
-            <ion-text
-              color="danger"
-              *ngIf="(f['password'].invalid && (f['password'].dirty || f['password'].touched)) || (submitted && f['password'].invalid)"
-            >
-              <small *ngIf="f['password'].errors?.['required']">Password is required.</small>
-              <small *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters.</small>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+        <ion-col style="position: relative;">
+          <ion-input
+            label="Password"
+            label-placement="floating"
+            fill="outline"
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+          ></ion-input>
+
+          <!-- Ícone de olho posicionado sobre o campo -->
+          <ion-icon
+            [name]="showPassword ? 'eye-off' : 'eye'"
+            class="toggle-password-icon"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+
+          <ion-text
+            color="danger"
+            *ngIf="(f['password'].invalid && (f['password'].dirty || f['password'].touched)) || (submitted && f['password'].invalid)"
+          >
+            <small *ngIf="f['password'].errors?.['required']">Password is required.</small>
+            <small *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters.</small>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+
 
         <!-- Submit Button -->
         <ion-row>

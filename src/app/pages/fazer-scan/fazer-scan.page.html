@@ -1,52 +1,114 @@
-<!-- src/app/pages/fazer-scan/fazer-scan.page.html -->
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button class="btn-voltar" routerLink="/adicionar-alimento">
+      <ion-button class="btn-voltar" routerLink="/tabs/tab2">
         <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
         Back
       </ion-button>
     </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button class="btn-adicionar" (click)="adicionarProduto()">
-        Add
-        <ion-icon name="add" slot="end"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Scan Product</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="fazer-scan-content">
-  <!-- Product image and scan overlay -->
-  <div class="imagem-container" (click)="iniciarScan()">
-    <img [src]="imagemProduto" alt="Product" />
-    <div class="scanner-overlay">
-      <ion-icon name="scan-outline"></ion-icon>
+<ion-content>
+  <div class="scan-button-container ion-padding">
+    <ion-button expand="block" size="large" shape="round" (click)="iniciarScan()" class="scan-button">
+      <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+      Scan Barcode
+    </ion-button>
+  </div>
+
+  <form #form="ngForm" id="formulario" class="formulario" (ngSubmit)="adicionarProduto()">
+    <ion-list lines="full" class="ion-padding">
+
+      <!-- Produto -->
+      <ion-item>
+        <ion-label position="stacked">Product</ion-label>
+        <ion-input
+          type="text"
+          name="produto"
+          [(ngModel)]="produto"
+          required
+          placeholder="e.g., Milk"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Quantidade -->
+      <ion-item>
+      <ion-label position="stacked">Quantity</ion-label>
+      <ion-input
+        type="number"
+        name="quantidade"
+        [(ngModel)]="quantidade"
+        required
+        placeholder="e.g., 3"
+      ></ion-input>
+
+      <ion-select
+        placeholder="Unit"
+        [(ngModel)]="unidade"
+        name="unidade"
+        interface="popover"
+        slot="end"
+      >
+        <ion-select-option value="un">units</ion-select-option>
+        <ion-select-option value="kg">kg</ion-select-option>
+        <ion-select-option value="g">g</ion-select-option>
+        <ion-select-option value="l">liters</ion-select-option>
+        <ion-select-option value="ml">ml</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
+
+      <!-- Data de Compra -->
+      <ion-item>
+        <ion-label position="stacked">Purchase Date</ion-label>
+        <ion-button fill="clear" (click)="mostrarCalendarioCompra = true" class="btn-calendario">
+          <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+          <span *ngIf="dataCompra">{{ dataCompra | date: 'shortDate' }}</span>
+        </ion-button>
+      </ion-item>
+      <ion-modal [isOpen]="mostrarCalendarioCompra" (didDismiss)="mostrarCalendarioCompra = false">
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="dataCompra"
+              name="dataCompra"
+              (ionChange)="mostrarCalendarioCompra = false"
+            ></ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
+      <!-- Data de Validade -->
+      <ion-item>
+        <ion-label position="stacked">Expiration Date</ion-label>
+        <ion-button fill="clear" (click)="mostrarCalendarioValidade = true" class="btn-calendario">
+          <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+          <span *ngIf="dataValidade">{{ dataValidade | date: 'shortDate' }}</span>
+        </ion-button>
+      </ion-item>
+      <ion-modal [isOpen]="mostrarCalendarioValidade" (didDismiss)="mostrarCalendarioValidade = false">
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              presentation="date"
+              [(ngModel)]="dataValidade"
+              name="dataValidade"
+              (ionChange)="mostrarCalendarioValidade = false"
+            ></ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-list>
+
+    <div class="bottom-button-wrapper">
+      <ion-button expand="block" type="submit" class="save-button" form="formulario">
+        Add
+        <ion-icon name="add-outline" slot="end"></ion-icon>
+      </ion-button>
     </div>
-  </div>
-
-  <!-- Fields filled after scan, editable by user -->
-  <div class="detalhes-container">
-    <ion-label class="campo">
-      <p class="campo-label">Product</p>
-      <p class="campo-valor">{{ produto }}</p>
-    </ion-label>
-
-    <ion-label class="campo">
-      <p class="campo-label">Quantity</p>
-      <ion-input [(ngModel)]="quantidade" placeholder="e.g. 330ml"></ion-input>
-    </ion-label>
-
-    <ion-label class="campo">
-      <p class="campo-label">Purchase date</p>
-      <ion-input [(ngModel)]="dataCompra" placeholder="DD-MM-YYYY"></ion-input>
-    </ion-label>
-
-    <ion-label class="campo">
-      <p class="campo-label">Expiration date</p>
-      <ion-input [(ngModel)]="dataValidade" placeholder="DD-MM-YYYY"></ion-input>
-    </ion-label>
-  </div>
+  </form>
 </ion-content>

@@ -63,20 +63,24 @@
 
       <!-- Password Field -->
       <ion-row>
-        <ion-col>
+        <ion-col style="position: relative;">
           <ion-input
             label="Password"
             label-placement="floating"
             fill="outline"
             formControlName="password"
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
           ></ion-input>
+
+          <ion-icon
+            [name]="showPassword ? 'eye-off' : 'eye'"
+            class="toggle-password-icon"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+
           <ion-text
             color="danger"
-            *ngIf="
-              (f['password'].invalid && (f['password'].dirty || f['password'].touched)) ||
-              (submitted && f['password'].invalid)
-            "
+            *ngIf="(f['password'].invalid && (f['password'].dirty || f['password'].touched)) || (submitted && f['password'].invalid)"
           >
             <small *ngIf="f['password'].errors?.['required']">
               Password is required.
@@ -87,6 +91,7 @@
           </ion-text>
         </ion-col>
       </ion-row>
+
 
       <!-- Register Button -->
       <ion-row>

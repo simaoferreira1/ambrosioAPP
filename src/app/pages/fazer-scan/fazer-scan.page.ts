@@ -15,9 +15,13 @@ import { Router } from '@angular/router';
 export class FazerScanPage implements OnInit {
   produto: string = '…';
   quantidade: string = '';
+  unidade: string = 'un'; 
   dataCompra: string = '';
   dataValidade: string = '';
   imagemProduto: string = 'assets/placeholder.png';
+ 
+  mostrarCalendarioCompra: boolean = false;
+  mostrarCalendarioValidade: boolean = false;
 
   private apiBase = 'https://prisma-api-three.vercel.app/api/v1';
   private loadingEl: HTMLIonLoadingElement | null = null;
@@ -97,7 +101,6 @@ export class FazerScanPage implements OnInit {
   async adicionarProduto() {
     const user: User | null = await this.authService.getCurrentUser();
     if (!user) {
-      console.error('No authenticated user.');
       const toast = await this.toastController.create({
         message: 'User not authenticated.',
         duration: 2000,
@@ -117,23 +120,54 @@ export class FazerScanPage implements OnInit {
       return;
     }
 
+        const quantidadeNum = parseFloat(this.quantidade.replace(',', '.'));
+
+        if (isNaN(quantidadeNum)) {
+      const toast = await this.toastController.create({
+        message: 'Quantity is invalid.',
+        duration: 2000,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
+    if (quantidadeNum <= 0) {
+      const toast = await this.toastController.create({
+        message: 'It is not possible to add products with negative or zero quantity.',
+        duration: 2500,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
+
+    const compra = new Date(this.dataCompra);
+    const validade = new Date(this.dataValidade);
+
+    if (validade < compra) {
+      const toast = await this.toastController.create({
+        message: 'Expiration date cannot be before purchase date.',
+        duration: 2500,
+        color: 'danger'
+      });
+      await toast.present();
+      return;
+    }
+
     const payload = {
       name: this.produto,
-      quantity: parseFloat(
-        this.quantidade.replace(/[^\d.,]/g, '').replace(',', '.')
-      ) || 1,
+      quantity: quantidadeNum,
       buyDate: this.dataCompra,
       expirationDate: this.dataValidade,
       userId: user.id
     };
 
-    console.log('📤 Payload for addFood:', payload);
-
     await this.presentLoading('Adding product...');
 
     this.foodService.addFood(payload).subscribe(
       async (created: Food) => {
-        console.log('Food created on server:', created);
         await this.dismissLoading();
         const toast = await this.toastController.create({
           message: 'Product successfully added!',
@@ -141,11 +175,9 @@ export class FazerScanPage implements OnInit {
           color: 'success'
         });
         await toast.present();
-
         this.router.navigateByUrl('/tabs/tab2');
       },
       async err => {
-        console.error('Error creating food on server:', err);
         await this.dismissLoading();
         const msg =
           err.error && err.error.error

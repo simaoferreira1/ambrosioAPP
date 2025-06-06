@@ -3,35 +3,47 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService, User } from '../../services/auth.service';
+
 @Component({
   selector: 'app-registo',
   templateUrl: './registo.page.html',
   styleUrls: ['./registo.page.scss'],
-  standalone:false,
+  standalone: false,
 })
 export class RegistoPage implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
+  showPassword = false; // 👈 Para o olho
 
   constructor(
-    private fb:      FormBuilder,
-    private auth:    AuthService,       // ← inject here
-    private router:  Router,
-    private toast:   ToastController
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private toast: ToastController
   ) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
-      name:     ['', [Validators.required, Validators.minLength(2)]],
-      email:    ['', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  get f() { return this.registerForm.controls; }
+  // Getter para facilitar acesso no HTML
+  get f() {
+    return this.registerForm.controls;
+  }
 
+  // Alternar visibilidade da password
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  // Submissão do formulário
   async onSubmit() {
     this.submitted = true;
+
     if (this.registerForm.invalid) {
       const t = await this.toast.create({
         message: 'Please correct the errors before continuing.',
@@ -42,8 +54,8 @@ export class RegistoPage implements OnInit {
     }
 
     const { name, email, password } = this.registerForm.value;
+
     try {
-      // ← call the API
       const user: User = await this.auth.register(name, email, password);
       await this.toast.create({
         message: `Account created for ${user.name}!`,
@@ -51,7 +63,6 @@ export class RegistoPage implements OnInit {
         color: 'success'
       }).then(toast => toast.present());
 
-      // navigate to welcome or login
       this.router.navigateByUrl('/login', { replaceUrl: true });
     } catch (err: any) {
       await this.toast.create({
