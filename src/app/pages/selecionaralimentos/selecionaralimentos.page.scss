@@ -39,3 +39,23 @@ ion-input {
   text-align: center;
 }
 
+/* Novo estilo para o label do alimento: texto e alerta alinhados em coluna */
+.alimento-label {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nome do alimento em negrito e espaçamento inferior */
+.nome-alimento {
+  font-weight: 600;
+}
+
+/* Estilo do alerta de validade */
+.alerta-validade {
+  color: #e67e22; /* laranja suave */
+  font-size: 12px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px; /* espaço entre ícone e texto */
+}

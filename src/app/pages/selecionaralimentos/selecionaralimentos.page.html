@@ -17,7 +17,7 @@
 
 <ion-content class="ion-padding">
 
-  <!-- Campo de instrução -->
+  <!-- Instruction field -->
   <ion-item lines="none" class="campo-instrucao">
     <ion-input
       placeholder="Select the foods you want to use"
@@ -25,13 +25,22 @@
     ></ion-input>
   </ion-item>
 
-  <!-- Lista de alimentos puxada da API -->
+  <!-- Foods list -->
   <ion-list>
     <ion-item *ngFor="let alimento of alimentos">
       <ion-avatar slot="start">
         <img [src]="alimento.imagem" />
       </ion-avatar>
-      <ion-label>{{ alimento.nome }}</ion-label>
+      <ion-label class="alimento-label">
+        <div class="nome-alimento">{{ alimento.nome }}</div>
+        <div
+          *ngIf="estaPertoDeExpirar(alimento.expirationDate)"
+          class="alerta-validade"
+        >
+          <ion-icon name="warning-outline"></ion-icon>
+          <span>About to expire soon!</span>
+        </div>
+      </ion-label>
       <ion-checkbox slot="end" [(ngModel)]="alimento.selecionado"></ion-checkbox>
     </ion-item>
   </ion-list>

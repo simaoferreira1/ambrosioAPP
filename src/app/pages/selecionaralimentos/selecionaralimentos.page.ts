@@ -14,6 +14,7 @@ export class SelecionaralimentosPage {
     nome: string;
     imagem: string;
     selecionado: boolean;
+    expirationDate?: string;  
   }> = [];
 
   constructor(
@@ -22,47 +23,45 @@ export class SelecionaralimentosPage {
     private foodService: FoodService
   ) {}
 
-  /**
-   * Every time this page becomes active, load the user's foods.
-   */
   async ionViewWillEnter() {
-    // 1) Get current user
     const user: User | null = await this.authService.getCurrentUser();
     if (!user) {
-      // If no user is logged in, leave alimentos empty
       this.alimentos = [];
       return;
     }
 
-    // 2) Fetch foods for this user
     this.foodService.getFoods(user.id).subscribe(
       (foods: Food[]) => {
-        // 3) Map each Food into { nome, imagem, selecionado }
         this.alimentos = foods.map(f => ({
           nome: f.name,
           imagem: f.image?.url || 'assets/placeholder.png',
-          selecionado: false  // default to unchecked
+          selecionado: false,
+          expirationDate: f.expirationDate  // guardar para usar na função
         }));
       },
       err => {
         console.error('Erro ao obter alimentos:', err);
-        // On error, keep alimentos empty or show a message
         this.alimentos = [];
       }
     );
   }
 
-  /**
-   * Navigate to the loading page, passing selected food names as queryParams.
-   */
   irParaCarregamento() {
     const selecionados = this.alimentos
       .filter(a => a.selecionado)
       .map(a => a.nome);
 
-    // Pass the selected names as a comma-separated string
     this.router.navigate(['/carregamento'], {
       queryParams: { foods: selecionados.join(',') }
     });
+  }
+
+  estaPertoDeExpirar(dataValidade?: string): boolean {
+    if (!dataValidade) return false;
+    const hoje = new Date();
+    const validade = new Date(dataValidade);
+    const diffMs = validade.getTime() - hoje.getTime();
+    const diffDias = diffMs / (1000 * 60 * 60 * 24);
+    return diffDias > 0 && diffDias <= 3; // 3 dias ou menos para expirar
   }
 }
