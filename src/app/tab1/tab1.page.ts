@@ -1,3 +1,5 @@
+// src/app/pages/tab1/tab1.page.ts
+
 import { Component } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 import { AuthService, User } from '../services/auth.service';
@@ -41,60 +43,58 @@ export class Tab1Page {
       return;
     }
 
-    this.foodService.getFoods(user.id).subscribe(
-      (foods: Food[]) => {
-        const today = new Date();
+    try {
+      // Use local storage only
+      const foods: Food[] = await this.foodService.getLocalFoods(user.id);
+      const today = new Date();
 
-        const soonToExpire = foods
-          .map(f => {
-            const expDate = new Date(f.expirationDate);
-            const diffMs = expDate.getTime() - today.getTime();
-            const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-            return { f, diffDays };
-          })
-          .filter(item => item.diffDays <= 7); // inclui expirados
+      const soonToExpire = foods
+        .map(f => {
+          const expDate = new Date(f.expirationDate);
+          const diffMs = expDate.getTime() - today.getTime();
+          const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+          return { f, diffDays };
+        })
+        .filter(item => item.diffDays <= 7);
 
-        if (soonToExpire.length === 0) {
-          this.slides = this.placeholders;
-          return;
+      if (soonToExpire.length === 0) {
+        this.slides = this.placeholders;
+        return;
+      }
+
+      this.slides = soonToExpire.map(item => {
+        const { f, diffDays } = item;
+
+        let subtitle: string;
+        if (diffDays < 0) {
+          subtitle = `Expired for ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''}`;
+        } else if (diffDays === 0) {
+          subtitle = 'Expires today';
+        } else if (diffDays === 1) {
+          subtitle = '1 day until expiration';
+        } else {
+          subtitle = `${diffDays} days until expiration`;
         }
 
-        this.slides = soonToExpire.map(item => {
-          const f = item.f;
-          const diffDays = item.diffDays;
+        let bgColor: string;
+        if (diffDays <= 1) {
+          bgColor = '#FF9595';
+        } else if (diffDays <= 3) {
+          bgColor = '#FFEB99';
+        } else {
+          bgColor = '#d9f3cf';
+        }
 
-          let subtitle: string;
-          if (diffDays < 0) {
-            subtitle = `Expired for ${Math.abs(diffDays)} day${Math.abs(diffDays) !== 1 ? 's' : ''}`;
-          } else if (diffDays === 0) {
-            subtitle = 'Expire today';
-          } else if (diffDays === 1) {
-            subtitle = '1 day until expire';
-          } else {
-            subtitle = `${diffDays} days until expiration`;
-          }
-
-          let bgColor: string;
-          if (diffDays <= 1) {
-            bgColor = '#FF9595'; // vermelho
-          } else if (diffDays >= 2 && diffDays <= 3) {
-            bgColor = '#FFEB99'; // amarelo
-          } else {
-            bgColor = '#d9f3cf'; // verde
-          }
-
-          return {
-            img: f.image?.url || 'assets/placeholder.png',
-            title: f.name,
-            subtitle,
-            bgColor
-          };
-        });
-      },
-      error => {
-        console.error('Error fetching foods for slides:', error);
-        this.slides = this.placeholders;
-      }
-    );
+        return {
+          img: f.image?.url || 'assets/placeholder.png',
+          title: f.name,
+          subtitle,
+          bgColor
+        };
+      });
+    } catch (err: any) {
+      console.error('Error loading local foods for slides:', err);
+      this.slides = this.placeholders;
+    }
   }
 }

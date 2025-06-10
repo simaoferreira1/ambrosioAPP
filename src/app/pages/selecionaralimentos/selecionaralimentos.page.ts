@@ -1,3 +1,5 @@
+// src/app/pages/selecionaralimentos/selecionaralimentos.page.ts
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
@@ -30,20 +32,19 @@ export class SelecionaralimentosPage {
       return;
     }
 
-    this.foodService.getFoods(user.id).subscribe(
-      (foods: Food[]) => {
-        this.alimentos = foods.map(f => ({
-          nome: f.name,
-          imagem: f.image?.url || 'assets/placeholder.png',
-          selecionado: false,
-          expirationDate: f.expirationDate  // guardar para usar na função
-        }));
-      },
-      err => {
-        console.error('Erro ao obter alimentos:', err);
-        this.alimentos = [];
-      }
-    );
+    try {
+      // Fetch only from local storage
+      const foods: Food[] = await this.foodService.getLocalFoods(user.id);
+      this.alimentos = foods.map(f => ({
+        nome: f.name,
+        imagem: f.image?.url || 'assets/placeholder.png',
+        selecionado: false,
+        expirationDate: f.expirationDate
+      }));
+    } catch (error: any) {
+      console.error('Error loading local foods:', error);
+      this.alimentos = [];
+    }
   }
 
   irParaCarregamento() {
@@ -62,6 +63,6 @@ export class SelecionaralimentosPage {
     const validade = new Date(dataValidade);
     const diffMs = validade.getTime() - hoje.getTime();
     const diffDias = diffMs / (1000 * 60 * 60 * 24);
-    return diffDias > 0 && diffDias <= 3; // 3 dias ou menos para expirar
+    return diffDias > 0 && diffDias <= 3;
   }
 }

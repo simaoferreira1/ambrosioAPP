@@ -1,26 +1,25 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, from, firstValueFrom } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 export interface Food {
   id: number;
   name: string;
   quantity: number;
-  buyDate: string; 
-  expirationDate: string; 
+  buyDate: string;
+  expirationDate: string;
   barcode?: string;
   userId: number;
   image?: { id: number; name: string; url: string };
+  unit?: string;  // LOCAL-ONLY
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class FoodService {
   private apiBase = 'https://prisma-api-three.vercel.app/api/v1';
-
   private storageReady = false;
 
   constructor(
@@ -32,141 +31,126 @@ export class FoodService {
     });
   }
 
-  /**
-   * POST /api/v1/foods  → cria no servidor E retorna o Food criado
-   * Nós continuamos fazendo a chamada HTTP normal, mas
-   * ao mesmo tempo adicionamos o food à storage local imediatamente,
-   * para que apareça na tela sem esperar a resposta do backend.
-   */
-  addFood(foodData: {
+  addFood(data: {
     name: string;
     quantity: number;
     buyDate: string;
     expirationDate: string;
     userId: number;
+    unit?: string;
   }): Observable<Food> {
     const url = `${this.apiBase}/foods`;
-    console.log('🔧 POST para:', url, 'payload:', foodData);
 
-    // 1) Escreve na storage local antes mesmo de chamar o backend:
-    this.addLocalFoodImmediate(foodData.userId, {
-      // Criamos um “mock” de Food local. O ID será atualizado quando o backend responder.
-      id: Date.now(),       // temporário; o backend vai gerar o real
-      name: foodData.name,
-      quantity: foodData.quantity,
-      buyDate: foodData.buyDate,
-      expirationDate: foodData.expirationDate,
-      userId: foodData.userId,
-      // sem image por enquanto (o backend preencherá)
-    });
+    // Add local temp
+    const temp: Food = {
+      id: Date.now(),
+      name: data.name,
+      quantity: data.quantity,
+      buyDate: data.buyDate,
+      expirationDate: data.expirationDate,
+      userId: data.userId,
+      unit: data.unit ?? 'un'
+    };
+    this.addLocal(data.userId, temp);
 
-    // 2) Chamamos o backend e, quando ele retornar, sobrescrevemos a entrada local:
-    return this.http.post<Food>(url, foodData).pipe(
-      map(async (created: Food) => {
-        // Atualiza a storage local substituindo o item temporário pelo criado real
-        await this.replaceLocalFood(created.userId, created);
-        return created;
-      }) as any
+    // Call backend and replace
+    return this.http.post<Food>(url, data).pipe(
+      switchMap(created =>
+        from(this.replaceLocal(data.userId, created, data.unit)).pipe(
+          switchMap(() => [created])
+        )
+      )
     );
   }
 
-  /**
-   * GET /api/v1/foods?userId=<userId>
-   */
-  getFoods(userId: number): Observable<Food[]> {
-    const url = `${this.apiBase}/foods?userId=${userId}`;
-    console.log('🔧 GET de:', url);
-    return this.http.get<Food[]>(url);
-  }
-
-  /**
-   * Recupera apenas as “local foods” (sem chamar o backend).
-   */
   async getLocalFoods(userId: number): Promise<Food[]> {
     if (!this.storageReady) {
       await this.storage.create();
       this.storageReady = true;
     }
     const key = `localFoods_user_${userId}`;
-    const existing: Food[] = (await this.storage.get(key)) || [];
-    return existing;
+    let list: Food[] = (await this.storage.get(key)) || [];
+    if (list.length === 0) {
+      try {
+        const serverFoods = await firstValueFrom(
+          this.http.get<Food[]>(`${this.apiBase}/foods?userId=${userId}`)
+        );
+        if (serverFoods) {
+          list = serverFoods.map(f => ({ ...f, unit: f.unit ?? 'un' }));
+          await this.storage.set(key, list);
+        }
+      } catch (e) {
+        console.warn('Server sync failed, no local data', e);
+      }
+    }
+    return list;
   }
 
-  /**
-   * Adiciona imediatamente à storage local sem esperar o backend:
-   */
-  private async addLocalFoodImmediate(userId: number, food: Food) {
+  deleteFood(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBase}/foods/${id}`).pipe(
+      tap(async () => {
+        await this.removeLocal(id);
+      })
+    );
+  }
+
+  private async addLocal(userId: number, food: Food) {
     if (!this.storageReady) {
       await this.storage.create();
       this.storageReady = true;
     }
     const key = `localFoods_user_${userId}`;
-    const existing: Food[] = (await this.storage.get(key)) || [];
-    existing.push(food);
-    await this.storage.set(key, existing);
+    const arr: Food[] = (await this.storage.get(key)) || [];
+    arr.push(food);
+    await this.storage.set(key, arr);
   }
 
-  /**
-   * Quando o backend responder com o registro “real” (com ID correto e image),
-   * substituímos o item temporário local (o que tiver mesmo nome+dataCompra)
-   * pelo objeto Food de volta do backend.
-   */
-  private async replaceLocalFood(userId: number, realFood: Food) {
+  private async replaceLocal(
+    userId: number,
+    realFood: Food,
+    unit?: string
+  ) {
     if (!this.storageReady) {
       await this.storage.create();
       this.storageReady = true;
     }
     const key = `localFoods_user_${userId}`;
-    const existing: Food[] = (await this.storage.get(key)) || [];
-    // Filtramos tudo que tenha o mesmo nome + buyDate + expirationDate + quantidade
-    const filtered = existing.filter(item =>
-      !(
-        item.name === realFood.name &&
+    const arr: Food[] = (await this.storage.get(key)) || [];
+
+    // preserve unit from temp
+    const prevUnit = arr.find(item =>
+      item.name === realFood.name &&
+      item.buyDate === realFood.buyDate &&
+      item.expirationDate === realFood.expirationDate &&
+      item.quantity === realFood.quantity
+    )?.unit;
+
+    // remove temp entries
+    const filtered = arr.filter(item =>
+      !(item.name === realFood.name &&
         item.buyDate === realFood.buyDate &&
         item.expirationDate === realFood.expirationDate &&
-        item.quantity === realFood.quantity
-      )
+        item.quantity === realFood.quantity)
     );
-    filtered.push(realFood);
+
+    filtered.push({
+      ...realFood,
+      unit: prevUnit ?? unit ?? 'un'
+    });
+
     await this.storage.set(key, filtered);
   }
-  /**
-   * DELETE /api/v1/foods/:id
-   * Remove o registro do servidor e também o remove de localStorage.
-   */
-  deleteFood(foodId: number): Observable<void> {
-    const url = `${this.apiBase}/foods/${foodId}`;
-    console.log('🔧 DELETE para:', url);
 
-    return new Observable<void>(observer => {
-      this.http.delete<void>(url).subscribe({
-        next: async () => {
-          // Remova também da storage local:
-          await this.removeFromLocal(foodId);
-          observer.next();
-          observer.complete();
-        },
-        error: err => {
-          observer.error(err);
-        }
-      });
-    });
-  }
-
-  /**
-   * Remove o Food com aquele ID de local storage (caso exista).
-   */
-  private async removeFromLocal(foodId: number) {
+  private async removeLocal(foodId: number) {
     if (!this.storageReady) {
       await this.storage.create();
       this.storageReady = true;
     }
-    // Como não sabemos o userId aqui, vamos iterar por todas as keys que comecem com "localFoods_user_"
     const keys = await this.storage.keys();
     for (const key of keys) {
       if (key.startsWith('localFoods_user_')) {
-        const list: Food[] = (await this.storage.get(key)) || [];
-        const filtered = list.filter(f => f.id !== foodId);
+        const arr: Food[] = (await this.storage.get(key)) || [];
+        const filtered = arr.filter(f => f.id !== foodId);
         await this.storage.set(key, filtered);
       }
     }
