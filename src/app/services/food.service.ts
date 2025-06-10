@@ -1,5 +1,3 @@
-// src/app/services/food.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
@@ -10,8 +8,8 @@ export interface Food {
   id: number;
   name: string;
   quantity: number;
-  buyDate: string;        // ISO string
-  expirationDate: string; // ISO string
+  buyDate: string; 
+  expirationDate: string; 
   barcode?: string;
   userId: number;
   image?: { id: number; name: string; url: string };
@@ -21,7 +19,6 @@ export interface Food {
   providedIn: 'root'
 })
 export class FoodService {
-  // ← Ajuste para o seu domínio real da API Vercel
   private apiBase = 'https://prisma-api-three.vercel.app/api/v1';
 
   private storageReady = false;
